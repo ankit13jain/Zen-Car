@@ -12,21 +12,10 @@
   <tbody>
 
   <% if current_customer.admin? %>
-    <p>Hello ADMIN!</p>
-    <% @customers.each do |customer| %>
-        <tr>
-          <td><%= link_to 'Show', customer %></td>
-          <td><%= link_to 'Edit', edit_customer_path(customer) %></td>
-          <td><%= link_to 'Destroy', customer, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-        </tr>
-    <% end %>
+      <%= render 'customers/admin_index' %>
   <% else %>
     <p>Hello USER!</p>
   <% end %>
 
   </tbody>
 </table>
-
-<br>
-
-<%= link_to 'New Customer', new_customer_path %>

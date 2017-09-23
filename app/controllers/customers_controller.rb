@@ -6,6 +6,7 @@ class CustomersController < ApplicationController
   def index
 
     @customers = Customer.all
+    @cars = Car.all
   end
 
   # GET /customers/1
@@ -15,6 +16,7 @@ class CustomersController < ApplicationController
 
   # GET /customers/new
   def new
+
     @customer = Customer.new
   end
 
