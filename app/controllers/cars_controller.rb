@@ -4,7 +4,7 @@ class CarsController < ApplicationController
   # GET /cars
   # GET /cars.json
   def index
-    @cars = Car.all
+    @cars = Car.search(params[:manufacturer], params[:model])
   end
 
   # GET /cars/1
@@ -71,4 +71,5 @@ class CarsController < ApplicationController
     def car_params
       params.require(:car).permit(:license_no, :manufacturer, :hourly_rate, :model, :location)
     end
+
 end
