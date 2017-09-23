@@ -1,0 +1,19 @@
+<header class="navbar navbar-fixed-top navbar-inverse">
+  <div class="container">
+    <div class="navbar-header pull-left">
+    <%= link_to "Cars4Rent", '#', id: "logo" %>
+    </div>
+    <nav>
+      <ul class="nav navbar-nav navbar-right">
+        <% if customer_signed_in? %>
+            <li><a href="#" class="navbar-link btn disabled">Logged in as <strong><%= current_customer.email %></strong></a></li>
+            <li><%= link_to 'Edit profile', edit_customer_registration_path, :class => 'navbar-link' %> |</li>
+            <li><%= link_to "Logout", destroy_customer_session_path, method: :delete, :class => 'navbar-link'  %></li>
+        <% else %>
+            <li><%= link_to "Sign up", new_customer_registration_path, :class => 'navbar-link'  %> |</li>
+            <li><%= link_to "Login", new_customer_session_path, :class => 'navbar-link'  %></li>
+        <% end %>
+      </ul>
+    </nav>
+  </div>
+</header>
