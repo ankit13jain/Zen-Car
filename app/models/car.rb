@@ -4,4 +4,8 @@ class Car < ApplicationRecord
 
   STATUS = ["Available", "Reserved", "Checked out"]
   STYLE = ["Coupe", "Sedan", "SUV"]
+
+  def self.search(search_manu,search_model)
+    where(['manufacturer LIKE ? AND model LIKE ?', "%#{search_manu}%", "%#{search_model}%"])
+  end
 end

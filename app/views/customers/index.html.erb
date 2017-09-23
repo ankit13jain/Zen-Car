@@ -29,4 +29,11 @@
 
 <br>
 
+<%= form_tag cars_path, method: :get do %>
+    <%= text_field_tag :manufacturer, params[:manufacturer] %>
+    <%= text_field_tag :model, params[:model] %>
+    <%= submit_tag "Search", name: nil %>
+<% end %>
+
+
 <%= link_to 'New Customer', new_customer_path %>

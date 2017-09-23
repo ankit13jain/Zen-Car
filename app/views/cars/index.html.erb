@@ -2,38 +2,52 @@
 
 <h1>Cars</h1>
 
-<table>
-  <thead>
-    <tr>
-      <th>License no</th>
-      <th>Manufacturer</th>
-      <th>Hourly rate</th>
-      <th>Model</th>
-      <th>Location</th>
-      <th>Style</th>
-      <th>Status</th>
-      <th colspan="3"></th>
-    </tr>
-  </thead>
+<%= form_tag cars_path, method: :get do %>
+    <%= text_field_tag :manufacturer, params[:manufacturer] %>
+    <%= text_field_tag :model, params[:model] %>
+    <%= submit_tag "Search", name: nil %>
+<% end %>
 
-  <tbody>
-    <% @cars.each do |car| %>
+<% if @cars.blank? %>
+    <h4>There are no cars containing your filter criteria</h4>
+<% else%>
+
+    <table>
+      <thead>
       <tr>
-        <td><%= car.license_no %></td>
-        <td><%= car.manufacturer %></td>
-        <td><%= car.hourly_rate %></td>
-        <td><%= car.model %></td>
-        <td><%= car.location %></td>
-        <td><%= car.style%></td>
-        <td><%= car.status%></td>
-        <td><%= link_to 'Show', car %></td>
-        <td><%= link_to 'Edit', edit_car_path(car) %></td>
-        <td><%= link_to 'Destroy', car, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <th>License no</th>
+        <th>Manufacturer</th>
+        <th>Hourly rate</th>
+        <th>Model</th>
+        <th>Location</th>
+        <th>Style</th>
+        <th>Status</th>
+        <th colspan="3"></th>
       </tr>
-    <% end %>
-  </tbody>
-</table>
+      </thead>
+
+      <tbody>
+      <% @cars.each do |car| %>
+          <tr>
+            <td><%= car.license_no %></td>
+            <td><%= car.manufacturer %></td>
+            <td><%= car.hourly_rate %></td>
+            <td><%= car.model %></td>
+            <td><%= car.location %></td>
+            <td><%= car.style%></td>
+            <td><%= car.status%></td>
+            <td><%= link_to 'Show', car %></td>
+            <td><%= link_to 'Edit', edit_car_path(car) %></td>
+            <td><%= link_to 'Destroy', car, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+          </tr>
+      <% end %>
+      </tbody>
+    </table>
+<% end %>
 
 <br>
 
-<%= link_to 'New Car', new_car_path %>
+<% if current_customer.admin? %>
+  <%= link_to 'New Car', new_car_path %>
+<% end %>
+<%= link_to 'Back', customers_path%>
