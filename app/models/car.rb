@@ -5,7 +5,9 @@ class Car < ApplicationRecord
   STATUS = ["Available", "Reserved", "Checked out"]
   STYLE = ["Coupe", "Sedan", "SUV"]
 
-  def self.search(search_manu,search_model)
-    where(['manufacturer LIKE ? AND model LIKE ?', "%#{search_manu}%", "%#{search_model}%"])
+  def self.search(params)
+    where(['manufacturer LIKE ? AND model LIKE ? AND location LIKE ? AND style LIKE ? AND status LIKE ?',
+           "%#{params[:manufacturer]}%", "%#{params[:model]}%", "%#{params[:location]}%" , "%#{params[:style]}%",
+           "%#{params[:status]}%"])
   end
 end

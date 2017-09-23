@@ -30,8 +30,11 @@
 <br>
 
 <%= form_tag cars_path, method: :get do %>
-    <%= text_field_tag :manufacturer, params[:manufacturer] %>
-    <%= text_field_tag :model, params[:model] %>
+    <%= text_field_tag :location, params[:location], placeholder: "Location" %>
+    <%= text_field_tag :manufacturer, params[:manufacturer], placeholder: "Manufacturer" %>
+    <%= text_field_tag :model, params[:model] , placeholder:"Model"%>
+    <%= text_field_tag :style, params[:style], placeholder:"Style" %>
+    <%= text_field_tag :status, params[:status],placeholder:"Status" %>
     <%= submit_tag "Search", name: nil %>
 <% end %>
 
