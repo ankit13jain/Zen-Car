@@ -10,8 +10,19 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-
 ActiveRecord::Schema.define(version: 20170922230129) do
+
+  create_table "cars", force: :cascade do |t|
+    t.string "license_no"
+    t.string "manufacturer"
+    t.float "hourly_rate"
+    t.string "model"
+    t.string "location"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.string "status"
+    t.string "style"
+  end
 
   create_table "customers", force: :cascade do |t|
     t.datetime "created_at", null: false
@@ -29,19 +40,6 @@ ActiveRecord::Schema.define(version: 20170922230129) do
     t.boolean "admin", default: false
     t.index ["email"], name: "index_customers_on_email", unique: true
     t.index ["reset_password_token"], name: "index_customers_on_reset_password_token", unique: true
-
-  end
-
-  create_table "cars", force: :cascade do |t|
-    t.string "license_no"
-    t.string "manufacturer"
-    t.float "hourly_rate"
-    t.string "model"
-    t.string "location"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.string "status"
-    t.string "style"
   end
 
 end

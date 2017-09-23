@@ -6,26 +6,34 @@
 
     <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
     <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
+    <!--[if lt IE 9]>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/r29/html5.min.js">
+    </script>
+    <![endif]-->
   </head>
 
   <body>
-    <% if notice %>
-        <p class="alert alert-success"><%= notice %></p>
-    <% end %>
-    <% if alert %>
-        <p class="alert alert-danger"><%= alert %></p>
-    <% end %>
-    <p class="navbar-text pull-right">
-      <% if customer_signed_in? %>
-          Logged in as <strong><%= current_customer.email %></strong>.
-          <%= link_to 'Edit profile', edit_customer_registration_path, :class => 'navbar-link' %> |
-          <%= link_to "Logout", destroy_customer_session_path, method: :delete, :class => 'navbar-link'  %>
-      <% else %>
-          <%= link_to "Sign up", new_customer_registration_path, :class => 'navbar-link'  %> |
-          <%= link_to "Login", new_customer_session_path, :class => 'navbar-link'  %>
-      <% end %>
-    </p>
+  <header class="navbar navbar-fixed-top navbar-inverse">
+    <div class="container">
+      <%= link_to "Cars4Rent", '#', id: "logo" %>
+      <nav>
+        <ul class="nav navbar-nav navbar-right">
+        <% if customer_signed_in? %>
+          <li>Logged in as <strong><%= current_customer.email %></strong></li>
+          <li><%= link_to 'Edit profile', edit_customer_registration_path, :class => 'navbar-link' %> |</li>
+          <li><%= link_to "Logout", destroy_customer_session_path, method: :delete, :class => 'navbar-link'  %></li>
+        <% else %>
+          <li><%= link_to "Sign up", new_customer_registration_path, :class => 'navbar-link'  %> |</li>
+          <li><%= link_to "Login", new_customer_session_path, :class => 'navbar-link'  %></li>
+        <% end %>
+        </ul>
+      </nav>
+    </div>
+  </header>
 
+  <div class="container">
     <%= yield %>
+  </div>
+
   </body>
 </html>

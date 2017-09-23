@@ -25,3 +25,5 @@
 *.idea/*
 *Gemfile.lock
 *Gemfile*
+
+*bk_application.css
