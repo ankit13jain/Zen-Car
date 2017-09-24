@@ -1,7 +1,8 @@
 <p>Hello ADMIN!</p>
 
+<hr>
+<p>CARS</p>
 <br>
-<%= link_to 'New Car', new_car_path %>
 
 <table>
   <thead>
@@ -35,18 +36,42 @@
   </tbody>
 </table>
 
-<hr>
+<%= link_to 'New Car', new_car_path %>
 
+
+<hr>
+<p>CUSTOMERS</p>
 
 <% @customers.each do |customer| %>
     <% unless customer.id.equal? current_customer.id %>
     <tr>
-      <td><p><%= customer.email %></p></td>
+      <td><%= customer.email %></td>
       <td><%= link_to 'Show', customer %></td>
       <td><%= link_to 'Edit', edit_customer_path(customer) %></td>
       <td><%= link_to 'Destroy', customer, method: :delete, data: { confirm: 'Are you sure?' } %></td>
     </tr>
+    <br>
     <% end %>
 <% end %>
 <br>
-<%= link_to 'New Customer', new_customer_path %>
+<%= link_to 'New Customer', new_customer_path, method: :get %>
+
+<hr>
+<p>ADMINS</p>
+<% @customers.each do |customer| if customer.admin? %>
+    <% unless customer.id.equal? current_customer.id %>
+        <tr>
+          <td><%= customer.email %></td>
+          <td><%= link_to 'Show', customer %></td>
+          <!-- <td><%= link_to 'Edit', edit_customer_path(customer) %></td> -->
+          <td><%= link_to 'Destroy', customer, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        </tr>
+        <br>
+    <% end %>
+  <% end %>
+<% end %>
+<br>
+<%= link_to 'New Admin', new_customer_path, method: :get %>
+
+<hr>
+<p>SUPERADMINS</p>

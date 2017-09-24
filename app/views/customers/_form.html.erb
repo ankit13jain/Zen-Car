@@ -1,17 +1,27 @@
-<%= form_with(model: customer, local: true) do |form| %>
-  <% if customer.errors.any? %>
+
+  <% if @customer.errors.any? %>
     <div id="error_explanation">
-      <h2><%= pluralize(customer.errors.count, "error") %> prohibited this customer from being saved:</h2>
+      <h2><%= pluralize(@customer.errors.count, "error") %> prohibited this customer from being saved:</h2>
 
       <ul>
-      <% customer.errors.full_messages.each do |message| %>
+      <% @customer.errors.full_messages.each do |message| %>
         <li><%= message %></li>
       <% end %>
       </ul>
     </div>
+
   <% end %>
 
+  <%= f.label :email %><br>
+  <%= f.text_field :email %><br>
+
+  <%= f.label :password %><br>
+  <%= f.password_field :password %><br>
+
+
+  <%= f.label :admin %><br>
+  <%= f.check_box :admin %><br>
+
   <div class="actions">
-    <%= form.submit %>
+    <%= f.submit %>
   </div>
-<% end %>

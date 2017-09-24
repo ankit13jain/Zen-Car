@@ -1,6 +1,8 @@
 <h1>Editing Customer</h1>
 
-<%= render 'form', customer: @customer %>
+<%= form_with(model: @customer, local: true, url: customer_path, method: :put) do |form| %>
+  <%= render partial: 'form', customer: @customer, locals: { f: form } %>
+<% end %>
 
 <%= link_to 'Show', @customer %> |
 <%= link_to 'Back', customers_path %>
