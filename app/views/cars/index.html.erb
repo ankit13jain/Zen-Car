@@ -1,17 +1,8 @@
 <p id="notice"><%= notice %></p>
 
 <h1>Cars</h1>
+<%= render "search_form"%>
 
-
-<%= form_tag cars_path, method: :get do %>
-    <%= text_field_tag :location, params[:location], placeholder: "Location" %>
-    <%= text_field_tag :manufacturer, params[:manufacturer], placeholder: "Manufacturer" %>
-    <%= text_field_tag :model, params[:model] , placeholder:"Model"%>
-    <%= select_tag :style, options_for_select(Car::STYLE), prompt: "Style" %>
-    <%= select_tag :status, options_for_select(Car::STATUS),include_blank:"Status" %>
-    <%= submit_tag "Search", name: nil %>
-<% end %>
-</br>
 <% if @cars.blank? %>
     <h4>There are no cars containing your filter criteria</h4>
 <% else%>
@@ -40,7 +31,7 @@
             <td><%= car.location %></td>
             <td><%= car.style%></td>
             <td><%= car.status%></td>
-            <td><%= link_to 'Reserve', customers_path%></td>
+            <td><%= link_to 'Reserve', new_order_path(:car_id => car,:cust_id => current_customer)%></td>
             <% if current_customer.admin? %>
               <td><%= link_to 'Show', car %></td>
               <td><%= link_to 'Edit', edit_car_path(car) %></td>

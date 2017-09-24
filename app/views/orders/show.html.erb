@@ -1,0 +1,39 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Checked out at:</strong>
+  <%= @order.checked_out_at %>
+</p>
+
+<p>
+  <strong>Reserved at:</strong>
+  <%= @order.reserved_at %>
+</p>
+
+<p>
+  <strong>Returned at:</strong>
+  <%= @order.returned_at %>
+</p>
+
+<p>
+  <strong>Car:</strong>
+  <%= @order.car %>
+</p>
+
+<p>
+  <strong>Customer:</strong>
+  <%= @order.customer %>
+</p>
+
+<p>
+  <strong>Status:</strong>
+  <%= @order.status %>
+</p>
+
+<p>
+  <strong>Total charges:</strong>
+  <%= @order.total_charges %>
+</p>
+
+<%= link_to 'Edit', edit_order_path(@order) %> |
+<%= link_to 'Back', orders_path %>
