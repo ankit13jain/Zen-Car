@@ -42,8 +42,7 @@
 <hr>
 <p>CUSTOMERS</p>
 
-<% @customers.each do |customer| %>
-    <% unless customer.id.equal? current_customer.id %>
+<% @customers.each do |customer| if not customer.admin? and not customer.superadmin? %>
     <tr>
       <td><%= customer.email %></td>
       <td><%= link_to 'Show', customer %></td>
@@ -54,20 +53,20 @@
     <% end %>
 <% end %>
 <br>
-<%= link_to 'New Customer', new_customer_path, method: :get %>
+<!-- <%= link_to 'New Customer', new_customer_path, method: :get %> -->
 
 <hr>
 <p>ADMINS</p>
-<% @customers.each do |customer| if customer.admin? %>
-    <% unless customer.id.equal? current_customer.id %>
+<% @customers.each do |customer| if customer.admin? and not customer.superadmin? %>
+
         <tr>
           <td><%= customer.email %></td>
           <td><%= link_to 'Show', customer %></td>
-          <!-- <td><%= link_to 'Edit', edit_customer_path(customer) %></td> -->
+          <td><%= link_to 'Edit', edit_customer_path(customer) %></td>
           <td><%= link_to 'Destroy', customer, method: :delete, data: { confirm: 'Are you sure?' } %></td>
         </tr>
         <br>
-    <% end %>
+
   <% end %>
 <% end %>
 <br>
@@ -75,3 +74,23 @@
 
 <hr>
 <p>SUPERADMINS</p>
+<% @customers.each do |customer| if customer.superadmin? %>
+
+            <tr>
+              <td><%= customer.email %></td>
+              <td><%= link_to 'Show', customer %></td>
+
+              <% if current_customer.superadmin? %>
+              <td><%= link_to 'Edit', edit_customer_path(customer) %></td>
+              <% end %>
+
+            </tr>
+            <br>
+
+    <% end %>
+<% end %>
+<br>
+
+<% if current_customer.superadmin? %>
+<%= link_to 'New Superadmin', new_customer_path, method: :get %>
+<% end %>

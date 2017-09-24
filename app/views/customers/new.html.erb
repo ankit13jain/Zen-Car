@@ -1,4 +1,4 @@
-<h1>New Customer / Admin</h1>
+<h1>New Admin / Superadmin</h1>
 
 <%= form_with(model: @customer, local: true, url: create_customer_path, method: :post) do |form| %>
   <%= render partial: 'form', customer: @customer, locals: { f: form } %>

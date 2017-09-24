@@ -2,6 +2,7 @@ class CustomersController < ApplicationController
   #before_action :set_customer, only: [:show, :edit, :update, :destroy]
   before_action :set_customer, only: [:show, :edit, :update, :destroy]
   before_action :authorize_admin, only: [:create, :show, :edit, :update, :destroy]
+  # Backend validation left
 
   # GET /customers
   # GET /customers.json
@@ -76,7 +77,7 @@ class CustomersController < ApplicationController
     # Never trust parameters from the scary internet, only allow the white list through.
     def customer_params
       params.fetch(:customer, {})
-      params.require(:customer).permit(:id, :email, :password, :salt, :encrypted_password, :admin)
+      params.require(:customer).permit(:id, :email, :password, :salt, :encrypted_password, :admin, :superadmin)
 
     end
 
@@ -84,6 +85,11 @@ class CustomersController < ApplicationController
     def authorize_admin
       return unless !current_customer.admin?
       redirect_to root_path, alert: 'Admins only!'
+    end
+
+    def authorize_superadmin
+      return unless !current_ustomer.superadmin?
+      redirect_to root_path, alert: 'SuperAdmins only!'
     end
 
 end
