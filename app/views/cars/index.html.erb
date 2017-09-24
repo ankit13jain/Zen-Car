@@ -7,8 +7,8 @@
     <%= text_field_tag :location, params[:location], placeholder: "Location" %>
     <%= text_field_tag :manufacturer, params[:manufacturer], placeholder: "Manufacturer" %>
     <%= text_field_tag :model, params[:model] , placeholder:"Model"%>
-    <%= select_tag :style, options_for_select(Car::STYLE), placeholder:"Style" %>
-    <%= text_field_tag :status, params[:status],placeholder:"Status" %>
+    <%= select_tag :style, options_for_select(Car::STYLE), prompt: "Style" %>
+    <%= select_tag :status, options_for_select(Car::STATUS),include_blank:"Status" %>
     <%= submit_tag "Search", name: nil %>
 <% end %>
 </br>
@@ -26,7 +26,7 @@
         <th>Location</th>
         <th>Style</th>
         <th>Status</th>
-        <th colspan="3"></th>
+        <th colspan="4"></th>
       </tr>
       </thead>
 
@@ -40,6 +40,7 @@
             <td><%= car.location %></td>
             <td><%= car.style%></td>
             <td><%= car.status%></td>
+            <td><%= link_to 'Reserve', customers_path%></td>
             <% if current_customer.admin? %>
               <td><%= link_to 'Show', car %></td>
               <td><%= link_to 'Edit', edit_car_path(car) %></td>
@@ -56,5 +57,4 @@
 <% if current_customer.admin? %>
   <%= link_to 'New Car', new_car_path %>
 <% end %>
-<%= link_to 'Reserve', customers_path%>
 <%= link_to 'Back', customers_path%>
