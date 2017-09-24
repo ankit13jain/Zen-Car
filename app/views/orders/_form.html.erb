@@ -1,0 +1,52 @@
+<%= form_with(model: order, local: true) do |form| %>
+  <% if order.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(order.errors.count, "error") %> prohibited this order from being saved:</h2>
+
+      <ul>
+      <% order.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= form.label :checked_out_at %>
+    <%= form.datetime_select :checked_out_at, id: :order_checked_out_at %>
+  </div>
+
+  <div class="field">
+    <%= form.label :reserved_at %>
+    <%= form.datetime_select :reserved_at, id: :order_reserved_at %>
+  </div>
+
+  <div class="field">
+    <%= form.label :returned_at %>
+    <%= form.datetime_select :returned_at, id: :order_returned_at %>
+  </div>
+
+  <div class="field">
+    <%= form.label :car_id %>
+    <%= form.text_field :car_id, id: :order_car_id %>
+  </div>
+
+  <div class="field">
+    <%= form.label :customer_id %>
+    <%= form.text_field :customer_id, id: :order_customer_id %>
+  </div>
+
+  <div class="field">
+    <%= form.label :status %>
+    <%= form.text_field :status, id: :order_status %>
+  </div>
+
+  <div class="field">
+    <%= form.label :total_charges %>
+    <%= form.text_field :total_charges, id: :order_total_charges %>
+  </div>
+
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+<% end %>

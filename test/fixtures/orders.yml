@@ -1,0 +1,19 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  checked_out_at: 2017-09-24 14:51:24
+  reserved_at: 2017-09-24 14:51:24
+  returned_at: 2017-09-24 14:51:24
+  car: one
+  customer: one
+  status: MyString
+  total_charges: 1.5
+
+two:
+  checked_out_at: 2017-09-24 14:51:24
+  reserved_at: 2017-09-24 14:51:24
+  returned_at: 2017-09-24 14:51:24
+  car: two
+  customer: two
+  status: MyString
+  total_charges: 1.5
