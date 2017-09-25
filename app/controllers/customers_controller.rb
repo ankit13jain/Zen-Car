@@ -9,6 +9,7 @@ class CustomersController < ApplicationController
   def index
     @customers = Customer.all
     @cars = Car.all
+    @orders = Order.all
   end
 
   # GET /customers/1
@@ -78,7 +79,6 @@ class CustomersController < ApplicationController
     def customer_params
       params.fetch(:customer, {})
       params.require(:customer).permit(:id, :email, :password, :salt, :encrypted_password, :admin, :superadmin)
-
     end
 
 end
