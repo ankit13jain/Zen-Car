@@ -6,26 +6,6 @@ class OrdersController < ApplicationController
   # GET /orders.json
   def index
     @orders = Order.all
-    cust_ids = []
-    car_ids = []
-    @orders.each do |order|
-      cust_ids << order.customer_id
-      car_ids << order.car_id
-    end
-    cars = Car.where(:id => car_ids)
-    customers = Customer.where(:id => cust_ids)
-    car_hash = {}
-    cust_hash = {}
-    cars.each do |car|
-      car_hash[car.id] = car
-    end
-    customers.each do |cust|
-      cust_hash[cust.id] = cust
-    end
-    @orders.each do |order|
-      order.car = car_hash[order.car_id]
-      order.customer = cust_hash[order.customer_id]
-    end
   end
 
   # GET /orders/1
@@ -58,6 +38,7 @@ class OrdersController < ApplicationController
     @order.customer_id = @@cust_id
     @car = Car.find(@order.car_id)
     @order.reserved_at = Time.now
+    @order.status = "Initiated"
     @order.total_charges = ((@order.returned_at - @order.checked_out_at)/3600).to_f * @order.car.hourly_rate
     respond_to do |format|
     if @@car_status == "Available" && @order.save
