@@ -16,11 +16,13 @@
   </div>
   <div class="field">
     <%= form.label :checked_out_at %>
-    <%= form.datetime_select :checked_out_at, id: :order_reserved_at %>
+    <%= form.datetime_select :checked_out_at, id: :order_checked_out__at %>
   </div>
   <div class="field">
-    <%= form.label "Return At" %>
-    <%= form.datetime_select :returned_at, id: :order_reserved_at %>
+
+    <%= form.label :returned_at %>
+    <%= form.datetime_select :returned_at, id: :order_returned_at %>
+
   </div>
   <% if current_customer.admin? %>
     <div class="field">
