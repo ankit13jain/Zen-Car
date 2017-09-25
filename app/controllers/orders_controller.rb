@@ -1,22 +1,43 @@
 class OrdersController < ApplicationController
   before_action :set_order, only: [:show, :edit, :update, :destroy]
+  #before_action :set_customer_car, only: [:show, :index]
 
   # GET /orders
   # GET /orders.json
   def index
     @orders = Order.all
+    cust_ids = []
+    car_ids = []
+    @orders.each do |order|
+      cust_ids << order.customer_id
+      car_ids << order.car_id
+    end
+    cars = Car.where(:id => car_ids)
+    customers = Customer.where(:id => cust_ids)
+    car_hash = {}
+    cust_hash = {}
+    cars.each do |car|
+      car_hash[car.id] = car
+    end
+    customers.each do |cust|
+      cust_hash[cust.id] = cust
+    end
+    @orders.each do |order|
+      order.car = car_hash[order.car_id]
+      order.customer = cust_hash[order.customer_id]
+    end
   end
 
   # GET /orders/1
   # GET /orders/1.json
   def show
-    puts "show"
+    @order.car = Car.find(@order.car_id)
+    @order.customer = Customer.find(@order.customer_id)
   end
 
   # GET /orders/new
   def new
     @order = Order.new
-    #@order.car_id = params[:car_id]
     @@cust_id = params[:cust_id]
     @order.car = Car.find(params[:car_id])
     @@car_status = @order.car.status
@@ -35,10 +56,11 @@ class OrdersController < ApplicationController
     puts order_params
     @order.car_id = @@car_id
     @order.customer_id = @@cust_id
+    @car = Car.find(@order.car_id)
+    @order.reserved_at = Time.now
+    @order.total_charges = ((@order.returned_at - @order.checked_out_at)/3600).to_f * @order.car.hourly_rate
     respond_to do |format|
-
     if @@car_status == "Available" && @order.save
-      @car = Car.find(@order.car_id)
       @car.status = "Reserved"
       @car.save
       format.html { redirect_to @order, notice: 'Order was successfully created.' }

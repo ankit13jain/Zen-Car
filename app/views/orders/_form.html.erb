@@ -19,8 +19,8 @@
     <%= form.datetime_select :checked_out_at, id: :order_reserved_at %>
   </div>
   <div class="field">
-    <%= form.label :reserved_at %>
-    <%= form.datetime_select :reserved_at, id: :order_reserved_at %>
+    <%= form.label "Return At" %>
+    <%= form.datetime_select :returned_at, id: :order_reserved_at %>
   </div>
   <% if current_customer.admin? %>
     <div class="field">
