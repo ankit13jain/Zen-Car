@@ -1,21 +1,8 @@
 <p id="notice"><%= notice %></p>
 
-<h1>Customers</h1>
+<% if current_customer.admin? %>
+    <%= render 'customers/admin_index' %>
+<% else %>
+  <p>Hello USER!</p>
+<% end %>
 
-<table>
-  <thead>
-    <tr>
-      <th colspan="3"></th>
-    </tr>
-  </thead>
-
-  <tbody>
-
-  <% if current_customer.admin? %>
-      <%= render 'customers/admin_index' %>
-  <% else %>
-    <p>Hello USER!</p>
-  <% end %>
-
-  </tbody>
-</table>
