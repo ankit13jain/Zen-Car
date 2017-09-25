@@ -9,6 +9,7 @@ class CustomersController < ApplicationController
   def index
     @customers = Customer.all
     @cars = Car.all
+    @orders = Order.all
   end
 
   # GET /customers/1
@@ -78,18 +79,6 @@ class CustomersController < ApplicationController
     def customer_params
       params.fetch(:customer, {})
       params.require(:customer).permit(:id, :email, :password, :salt, :encrypted_password, :admin, :superadmin)
-
-    end
-
-    # This should probably be abstracted to ApplicationController
-    def authorize_admin
-      return unless !current_customer.admin?
-      redirect_to root_path, alert: 'Admins only!'
-    end
-
-    def authorize_superadmin
-      return unless !current_ustomer.superadmin?
-      redirect_to root_path, alert: 'SuperAdmins only!'
     end
 
 end
