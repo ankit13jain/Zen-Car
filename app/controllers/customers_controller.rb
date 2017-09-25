@@ -1,26 +1,27 @@
 class CustomersController < ApplicationController
+  #before_action :set_customer, only: [:show, :edit, :update, :destroy]
   before_action :set_customer, only: [:show, :edit, :update, :destroy]
+  before_action :authorize_admin, only: [:create, :show, :edit, :update, :destroy]
+  # Backend validation left
 
   # GET /customers
   # GET /customers.json
   def index
-    puts "######"
-    puts current_customer.email
     orders = Order.where(:customer_id => current_customer.id).where.not(:status => "Completed")
     if orders.length > 0
       puts "in order"
       @order = orders.first
-      puts @order.status
-    #  if order[0].status == "Initiated"
-     #   @reserved = true
-     # else
     end
+
     @customers = Customer.all
+    @cars = Car.all
+    @orders = Order.all
   end
 
   # GET /customers/1
   # GET /customers/1.json
   def show
+
   end
 
   # GET /customers/new
@@ -30,6 +31,7 @@ class CustomersController < ApplicationController
 
   # GET /customers/1/edit
   def edit
+
   end
 
   # POST /customers
@@ -82,5 +84,7 @@ class CustomersController < ApplicationController
     # Never trust parameters from the scary internet, only allow the white list through.
     def customer_params
       params.fetch(:customer, {})
+      params.require(:customer).permit(:id, :email, :password, :salt, :encrypted_password, :admin, :superadmin)
     end
+
 end

@@ -1,0 +1,163 @@
+<p>Hello ADMIN!</p>
+
+<hr>
+<p>RESERVATIONS</p>
+
+<table class='table table-hover'>
+  <thead>
+  <tr>
+    <th>Checked out</th>
+    <th>Reserved</th>
+    <th>Returned</th>
+    <th>Car</th>
+    <th>Customer</th>
+    <th>Status</th>
+    <th>Total Charges</th>
+    <th colspan="3"></th>
+  </tr>
+  </thead>
+
+  <tbody>
+  <% @orders.each do |order| %>
+      <tr>
+        <td><%= order.checked_out_at %></td>
+        <td><%= order.reserved_at %></td>
+        <td><%= order.returned_at %></td>
+        <td><%= order.car_id %></td>
+        <td><%= order.customer_id %></td>
+        <td><%= order.status %></td>
+        <td><%= order.total_charges %></td>
+        <td><%= link_to 'Show', order %></td>
+        <td><%= link_to 'Edit', edit_order_path(order) %></td>
+        <td><%= link_to 'Destroy', order, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+  <% end %>
+  </tbody>
+</table>
+
+<!-- <%= link_to 'New Customer', new_customer_path, method: :get %> -->
+<hr>
+<p>CARS</p>
+
+<table class='table table-hover'>
+  <thead>
+  <tr>
+    <th>License no</th>
+    <th>Manufacturer</th>
+    <th>Hourly rate</th>
+    <th>Model</th>
+    <th>Location</th>
+    <th>Style</th>
+    <th>Status</th>
+    <th colspan="3"></th>
+  </tr>
+  </thead>
+
+  <tbody>
+  <% @cars.each do |car| %>
+      <tr>
+        <td><%= car.license_no %></td>
+        <td><%= car.manufacturer %></td>
+        <td><%= car.hourly_rate %></td>
+        <td><%= car.model %></td>
+        <td><%= car.location %></td>
+        <td><%= car.style%></td>
+        <td><%= car.status%></td>
+        <td><%= link_to 'Show', car %></td>
+        <td><%= link_to 'Edit', edit_car_path(car) %></td>
+        <td><%= link_to 'Destroy', car, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+  <% end %>
+  </tbody>
+</table>
+
+<%= link_to 'New Car', new_car_path %>
+
+<hr>
+<p>CUSTOMERS</p>
+
+<table class='table table-hover'>
+  <thead>
+  <tr>
+    <th>Email</th>
+    <th colspan="3"></th>
+  </tr>
+  </thead>
+
+  <tbody>
+    <% @customers.each do |customer| if not customer.admin? and not customer.superadmin? %>
+        <tr>
+          <td><%= customer.email %></td>
+          <td><%= link_to 'Show', customer %></td>
+          <td><%= link_to 'Edit', edit_customer_path(customer) %></td>
+          <td><%= link_to 'Destroy', customer, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        </tr>
+        <% end %>
+    <% end %>
+  </tbody>
+</table>
+
+<!-- <%= link_to 'New Customer', new_customer_path, method: :get %> -->
+
+<hr>
+<p>ADMINS</p>
+
+<table class='table table-hover'>
+  <thead>
+  <tr>
+    <th>Email</th>
+    <th colspan="3"></th>
+  </tr>
+  </thead>
+
+  <tbody>
+    <% @customers.each do |customer| if customer.admin? and not customer.superadmin? %>
+
+      <tr>
+        <td><%= customer.email %></td>
+        <td><%= link_to 'Show', customer %></td>
+        <td><%= link_to 'Edit', edit_customer_path(customer) %></td>
+        <td><%= link_to 'Destroy', customer, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+
+      <% end %>
+    <% end %>
+  </tbody>
+</table>
+
+<%= link_to 'New Admin', new_customer_path, method: :get %>
+
+<hr>
+<p>SUPERADMINS</p>
+
+<table class='table table-hover'>
+  <thead>
+  <tr>
+    <th>Email</th>
+    <th colspan="3"></th>
+  </tr>
+  </thead>
+
+  <tbody>
+  <% @customers.each do |customer| if customer.superadmin? %>
+
+        <tr>
+          <td><%= customer.email %></td>
+          <td><%= link_to 'Show', customer %></td>
+
+          <% if current_customer.superadmin? %>
+          <td><%= link_to 'Edit', edit_customer_path(customer) %></td>
+          <% end %>
+
+        </tr>
+
+      <% end %>
+  <% end %>
+</tbody>
+</table>
+
+<% if current_customer.superadmin? %>
+<%= link_to 'New Superadmin', new_customer_path, method: :get %>
+<% end %>
+
+<hr>

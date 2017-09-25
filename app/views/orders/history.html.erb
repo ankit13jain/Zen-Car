@@ -1,0 +1,34 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Cars</h1>
+
+<% if @orders.blank? %>
+    <h4>There are no orders</h4>
+<% else%>
+
+    <table class='table table-hover'>
+      <thead>
+      <tr>
+        <th>Car</th>
+        <th>Check out time</th>
+        <th>Return time</th>
+        <th>Total charges</th>
+        <th colspan="4"></th>
+      </tr>
+      </thead>
+
+      <tbody>
+      <% @orders.each do |order| %>
+          <tr>
+            <td><%= order.car.manufacturer %>&nbsp;<%= order.car.model %></td>
+            <td><%= order.checked_out_at %></td>
+            <td><%= order.returned_at %></td>
+            <td><%= order.total_charges %></td>
+
+          </tr>
+      <% end %>
+      </tbody>
+    </table>
+<% end %>
+
+<br>

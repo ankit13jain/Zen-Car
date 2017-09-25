@@ -75,6 +75,7 @@ class OrdersController < ApplicationController
       format.json { head :no_content }
     end
   end
+
   def checkout
     @order = Order.where(:customer_id => current_customer.id, :status => "Initiated").first
     car = Car.find(@order.car_id)
@@ -85,6 +86,7 @@ class OrdersController < ApplicationController
       end
     end
   end
+
   def return
     @order = Order.where(:customer_id => current_customer.id, :status => "In Progress").first
     car = Car.find(@order.car_id)
@@ -95,6 +97,11 @@ class OrdersController < ApplicationController
       end
     end
   end
+
+  def history
+    @orders = Order.search(params)
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_order
@@ -106,3 +113,5 @@ class OrdersController < ApplicationController
       params.require(:order).permit(:checked_out_at, :reserved_at, :returned_at, :car, :customer_id, :status, :total_charges)
     end
 end
+
+

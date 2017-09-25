@@ -1,7 +1,12 @@
 Rails.application.routes.draw do
   resources :orders
   devise_for :customers
-  resources :customers, :cars
+  resources :customers, except: :create
+  resources :cars
+
+  post 'create_customer' => 'customers#create', as: :create_customer
+
+  get 'order_history' => 'orders#history'
 
   root 'customers#index'
   get 'order_checkout' => 'orders#checkout'

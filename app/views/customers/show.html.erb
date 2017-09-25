@@ -1,4 +1,11 @@
 <p id="notice"><%= notice %></p>
 
-<%= link_to 'Edit', edit_customer_path(@customer) %> |
+<p>
+  <strong>Email:</strong>
+  <%= @customer.email %>
+</p>
+
+<% if current_customer.superadmin? or current_customer.admin? and not @customer.superadmin?%>
+  <%= link_to 'Edit', edit_customer_path(@customer) %> |
+<% end %>
 <%= link_to 'Back', customers_path %>
