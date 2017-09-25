@@ -10,36 +10,24 @@
       </ul>
     </div>
   <% end %>
-
+  <div class="field">
+    <%= form.label :car_id %>
+    <%= order.car.manufacturer %>&nbsp;<%= order.car.model %>
+  </div>
   <div class="field">
     <%= form.label :checked_out_at %>
-    <%= form.datetime_select :checked_out_at, id: :order_checked_out_at %>
+    <%= form.datetime_select :checked_out_at, id: :order_reserved_at %>
   </div>
-
   <div class="field">
     <%= form.label :reserved_at %>
     <%= form.datetime_select :reserved_at, id: :order_reserved_at %>
   </div>
-
-  <div class="field">
-    <%= form.label :returned_at %>
-    <%= form.datetime_select :returned_at, id: :order_returned_at %>
-  </div>
-
-  <div class="field">
-    <%= form.label :car_id %>
-    <%= form.text_field :car_id, id: :order_car_id %>
-  </div>
-
-  <div class="field">
-    <%= form.label :customer_id %>
-    <%= form.text_field :customer_id, id: :order_customer_id %>
-  </div>
-
-  <div class="field">
-    <%= form.label :status %>
-    <%= form.text_field :status, id: :order_status %>
-  </div>
+  <% if current_customer.admin? %>
+    <div class="field">
+      <%= form.label :customer_id %>
+      <%= form.text_field :customer_id, id: :order_customer_id %>
+    </div>
+  <% end %>
 
   <div class="field">
     <%= form.label :total_charges %>

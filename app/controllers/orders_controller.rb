@@ -16,10 +16,11 @@ class OrdersController < ApplicationController
   def new
     @order = Order.new
     #@order.car_id = params[:car_id]
-    @order.customer_id = params[:cust_id]
+    @@cust_id = params[:cust_id]
     @order.car = Car.find(params[:car_id])
-    puts "************"
-    puts @order.car
+    @@car_status = @order.car.status
+    @@car_id = @order.car.id
+
   end
 
   # GET /orders/1/edit
@@ -30,15 +31,24 @@ class OrdersController < ApplicationController
   # POST /orders.json
   def create
     @order = Order.new(order_params)
-
+    puts order_params
+    @order.car_id = @@car_id
+    @order.customer_id = @@cust_id
     respond_to do |format|
-      if @order.save
-        format.html { redirect_to @order, notice: 'Order was successfully created.' }
-        format.json { render :show, status: :created, location: @order }
-      else
-        format.html { render :new }
-        format.json { render json: @order.errors, status: :unprocessable_entity }
-      end
+        puts "$$$$$$$$"
+        puts @@car_status
+        puts "##########"
+        puts @@cust_id
+        puts "#$%^&*("
+        puts @order.reserved_at
+        if @@car_status == "Available" && @order.save
+          format.html { redirect_to @order, notice: 'Order was successfully created.' }
+          format.json { render :show, status: :created, location: @order }
+        else
+          flash[:notice] = "There was an error creating an order"
+          format.html { render :root_path }
+          format.json { render json: @order.errors, status: :unprocessable_entity }
+        end
     end
   end
 
@@ -74,6 +84,6 @@ class OrdersController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def order_params
-      params.require(:order).permit(:checked_out_at, :reserved_at, :returned_at, :car_id, :customer_id, :status, :total_charges)
+      params.require(:order).permit(:checked_out_at, :reserved_at, :returned_at, :car, :customer_id, :status, :total_charges)
     end
 end
