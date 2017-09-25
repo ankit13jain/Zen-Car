@@ -35,17 +35,19 @@
     <%= form.label :location %>
     <%= form.text_field :location, id: :car_location %>
   </div>
-    <div class="field">
-      <%= form.label :status %>
-      <%= form.collection_select :status, Car::STATUS, :to_s, :to_s %>
-    </div>
 
-    <div class="field">
-      <%= form.label :style %>
-      <%= form.collection_select :style, Car::STYLE, :to_s, :to_s %>
-    </div>
+  <div class="field">
+    <%= form.label :status %>
+    <%= form.collection_select :status, Car::STATUS, :to_s, :to_s %>
+  </div>
+
+  <div class="field">
+    <%= form.label :style %>
+    <%= form.collection_select :style, Car::STYLE, :to_s, :to_s %>
+  </div>
 
   <div class="actions">
     <%= form.submit %>
   </div>
+
 <% end %>
