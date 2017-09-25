@@ -7,6 +7,12 @@ class CustomersController < ApplicationController
   # GET /customers
   # GET /customers.json
   def index
+    orders = Order.where(:customer_id => current_customer.id).where.not(:status => "Completed")
+    if orders.length > 0
+      puts "in order"
+      @order = orders.first
+    end
+
     @customers = Customer.all
     @cars = Car.all
     @orders = Order.all

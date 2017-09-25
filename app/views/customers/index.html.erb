@@ -3,12 +3,17 @@
 <% if current_customer.admin? %>
     <%= render 'customers/admin_index' %>
 <% else %>
-  <p>Hello USER!</p>
+    <p>Hello USER!</p>
+    <% if !@order.nil? && @order.status == "Initiated" %>
+      <%=link_to 'Check out', order_checkout_path %>
+    <% elsif !@order.nil? && @order.status == "In Progress"%>
+      <%=link_to 'Return', order_return_path %>
+    <% end %>
 <% end %>
 
 <br>
 <h3>Search Cars</h3>
+
 <%= render "cars/search_form" %>
 
 <%= link_to 'Order History', order_history_path(:cust_id => current_customer) %>
-

@@ -1,38 +1,15 @@
 class OrdersController < ApplicationController
   before_action :set_order, only: [:show, :edit, :update, :destroy]
-  #before_action :set_customer_car, only: [:show, :index]
 
   # GET /orders
   # GET /orders.json
   def index
     @orders = Order.all
-    cust_ids = []
-    car_ids = []
-    @orders.each do |order|
-      cust_ids << order.customer_id
-      car_ids << order.car_id
-    end
-    cars = Car.where(:id => car_ids)
-    customers = Customer.where(:id => cust_ids)
-    car_hash = {}
-    cust_hash = {}
-    cars.each do |car|
-      car_hash[car.id] = car
-    end
-    customers.each do |cust|
-      cust_hash[cust.id] = cust
-    end
-    @orders.each do |order|
-      order.car = car_hash[order.car_id]
-      order.customer = cust_hash[order.customer_id]
-    end
   end
 
   # GET /orders/1
   # GET /orders/1.json
   def show
-    @order.car = Car.find(@order.car_id)
-    @order.customer = Customer.find(@order.customer_id)
   end
 
   # GET /orders/new
@@ -58,9 +35,11 @@ class OrdersController < ApplicationController
     @order.customer_id = @@cust_id
     @car = Car.find(@order.car_id)
     @order.reserved_at = Time.now
+    @order.status = "Initiated"
     @order.total_charges = ((@order.returned_at - @order.checked_out_at)/3600).to_f * @order.car.hourly_rate
     respond_to do |format|
-    if @@car_status == "Available" && @order.save
+    #if @@car_status == "Available" && @order.save
+    if @order.save
       @car.status = "Reserved"
       @car.save
       format.html { redirect_to @order, notice: 'Order was successfully created.' }
@@ -97,9 +76,29 @@ class OrdersController < ApplicationController
     end
   end
 
+  def checkout
+    @order = Order.where(:customer_id => current_customer.id, :status => "Initiated").first
+    car = Car.find(@order.car_id)
+    respond_to do |format|
+      if @order.update(status:"In Progress") && car.update(status:"Checked out")
+        format.html { redirect_to root_path, notice: 'Car Checked Out successfully' }
+        format.json { render :show, status: :ok, location: @order }
+      end
+    end
+  end
+
+  def return
+    @order = Order.where(:customer_id => current_customer.id, :status => "In Progress").first
+    car = Car.find(@order.car_id)
+    respond_to do |format|
+      if @order.update(status:"Completed") && car.update(status:"Available")
+        format.html { redirect_to root_path, notice: 'Car Returned successfully' }
+        format.json { render :show, status: :ok, location: @order }
+      end
+    end
+  end
+
   def history
-    #puts "*****"
-    #puts params
     @orders = Order.search(params)
   end
 
