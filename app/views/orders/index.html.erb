@@ -5,8 +5,8 @@
 <table>
   <thead>
     <tr>
-      <th>Checked out at</th>
       <th>Reserved at</th>
+      <th>Checked out at</th>
       <th>Returned at</th>
       <th>Car</th>
       <th>Customer</th>
@@ -19,11 +19,11 @@
   <tbody>
     <% @orders.each do |order| %>
       <tr>
-        <td><%= order.checked_out_at %></td>
         <td><%= order.reserved_at %></td>
+        <td><%= order.checked_out_at %></td>
         <td><%= order.returned_at %></td>
-        <td><%= order.car %></td>
-        <td><%= order.customer %></td>
+        <td><%= order.car.manufacturer %>&nbsp;<%= order.car.model %></td>
+        <td><%= order.customer.email %></td>
         <td><%= order.status %></td>
         <td><%= order.total_charges %></td>
         <td><%= link_to 'Show', order %></td>
