@@ -23,5 +23,7 @@
 .byebug_history
 
 *.idea/*
-*Gemfile.lock*
-*Gemfile*
+*Gemfile.lock
+*Gemfile
+
+
