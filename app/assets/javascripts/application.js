@@ -15,11 +15,13 @@
 //= require jquery_ujs
 
 //= require bootstrap-sprockets
+//= requore bootstrap
 
 //= require rails-ujs
 //= require turbolinks
-//= require_tree .
 //= require jquery
 //= require turbolinks
 //= require moment
 //= require bootstrap-datetimepicker
+
+//= require_tree .
