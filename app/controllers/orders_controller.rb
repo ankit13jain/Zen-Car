@@ -76,6 +76,12 @@ class OrdersController < ApplicationController
     end
   end
 
+  def history
+    #puts "*****"
+    #puts params
+    @orders = Order.search(params)
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_order
@@ -87,3 +93,5 @@ class OrdersController < ApplicationController
       params.require(:order).permit(:checked_out_at, :reserved_at, :returned_at, :car, :customer_id, :status, :total_charges)
     end
 end
+
+
