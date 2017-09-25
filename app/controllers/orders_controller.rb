@@ -10,6 +10,7 @@ class OrdersController < ApplicationController
   # GET /orders/1
   # GET /orders/1.json
   def show
+    puts "show"
   end
 
   # GET /orders/new
@@ -35,20 +36,18 @@ class OrdersController < ApplicationController
     @order.car_id = @@car_id
     @order.customer_id = @@cust_id
     respond_to do |format|
-        puts "$$$$$$$$"
-        puts @@car_status
-        puts "##########"
-        puts @@cust_id
-        puts "#$%^&*("
-        puts @order.reserved_at
-        if @@car_status == "Available" && @order.save
-          format.html { redirect_to @order, notice: 'Order was successfully created.' }
-          format.json { render :show, status: :created, location: @order }
-        else
-          flash[:notice] = "There was an error creating an order"
-          format.html { render :root_path }
-          format.json { render json: @order.errors, status: :unprocessable_entity }
-        end
+
+    if @@car_status == "Available" && @order.save
+      @car = Car.find(@order.car_id)
+      @car.status = "Reserved"
+      @car.save
+      format.html { redirect_to @order, notice: 'Order was successfully created.' }
+      format.json { render :show, status: :created, location: @order }
+    else
+      flash[:notice] = "There was an error creating an order"
+      format.html { render :root_path }
+      format.json { render json: @order.errors, status: :unprocessable_entity }
+    end
     end
   end
 
