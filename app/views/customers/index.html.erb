@@ -1,35 +1,14 @@
-<p id="notice"><%= notice %></p>
-
-<h1>Customers</h1>
-
-<table>
-  <thead>
-    <tr>
-      <th colspan="3"></th>
-    </tr>
-  </thead>
-
-  <tbody>
-
-  <% if current_customer.admin? %>
-    <p>Hello ADMIN!</p>
-    <% @customers.each do |customer| %>
-        <tr>
-          <td><%= link_to 'Show', customer %></td>
-          <td><%= link_to 'Edit', edit_customer_path(customer) %></td>
-          <td><%= link_to 'Destroy', customer, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-        </tr>
+<% if current_customer.admin? %>
+    <%= render 'customers/admin_index' %>
+<% else %>
+    <p>Hello USER!</p>
+    <% if !@order.nil? && @order.status == "Initiated" %>
+      <%=link_to 'Check out', order_checkout_path %>
+    <% elsif !@order.nil? && @order.status == "In Progress"%>
+      <%=link_to 'Return', order_return_path %>
     <% end %>
-  <% else %>
-    <p></p>
-  <% end %>
-
-  </tbody>
-</table>
+<% end %>
 
 <br>
 <h3>Search Cars</h3>
 <%= render "cars/search_form" %>
-
-
-<%= link_to 'New Customer', new_customer_path %>

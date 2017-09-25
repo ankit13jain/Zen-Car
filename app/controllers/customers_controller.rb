@@ -4,7 +4,17 @@ class CustomersController < ApplicationController
   # GET /customers
   # GET /customers.json
   def index
-
+    puts "######"
+    puts current_customer.email
+    orders = Order.where(:customer_id => current_customer.id).where.not(:status => "Completed")
+    if orders.length > 0
+      puts "in order"
+      @order = orders.first
+      puts @order.status
+    #  if order[0].status == "Initiated"
+     #   @reserved = true
+     # else
+    end
     @customers = Customer.all
   end
 

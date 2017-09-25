@@ -1,6 +1,5 @@
 class OrdersController < ApplicationController
   before_action :set_order, only: [:show, :edit, :update, :destroy]
-  #before_action :set_customer_car, only: [:show, :index]
 
   # GET /orders
   # GET /orders.json
@@ -11,8 +10,6 @@ class OrdersController < ApplicationController
   # GET /orders/1
   # GET /orders/1.json
   def show
-    @order.car = Car.find(@order.car_id)
-    @order.customer = Customer.find(@order.customer_id)
   end
 
   # GET /orders/new
@@ -41,7 +38,8 @@ class OrdersController < ApplicationController
     @order.status = "Initiated"
     @order.total_charges = ((@order.returned_at - @order.checked_out_at)/3600).to_f * @order.car.hourly_rate
     respond_to do |format|
-    if @@car_status == "Available" && @order.save
+    #if @@car_status == "Available" && @order.save
+    if @order.save
       @car.status = "Reserved"
       @car.save
       format.html { redirect_to @order, notice: 'Order was successfully created.' }
@@ -77,7 +75,26 @@ class OrdersController < ApplicationController
       format.json { head :no_content }
     end
   end
-
+  def checkout
+    @order = Order.where(:customer_id => current_customer.id, :status => "Initiated").first
+    car = Car.find(@order.car_id)
+    respond_to do |format|
+      if @order.update(status:"In Progress") && car.update(status:"Checked out")
+        format.html { redirect_to root_path, notice: 'Car Checked Out successfully' }
+        format.json { render :show, status: :ok, location: @order }
+      end
+    end
+  end
+  def return
+    @order = Order.where(:customer_id => current_customer.id, :status => "In Progress").first
+    car = Car.find(@order.car_id)
+    respond_to do |format|
+      if @order.update(status:"Completed") && car.update(status:"Available")
+        format.html { redirect_to root_path, notice: 'Car Returned successfully' }
+        format.json { render :show, status: :ok, location: @order }
+      end
+    end
+  end
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_order
