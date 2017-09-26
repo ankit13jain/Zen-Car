@@ -4,7 +4,7 @@ class Order < ApplicationRecord
 
   STATUS = ["Initiated", "In Progress", "Completed"]
   def self.search(params)
-    where(['customer_id LIKE ?', "%#{params[:cust_id]}%"])
+    where(['cast(customer_id as text) LIKE ?', "%#{params[:cust_id]}%"])
   end
 
 end
