@@ -7,9 +7,9 @@ class CustomersController < ApplicationController
   # GET /customers
   # GET /customers.json
   def index
-    orders = Order.where(:customer_id => current_customer.id).where.not(:status => "Completed")
+    orders = Order.where(:customer_id => current_customer.id).where(:status => ["Initiated", "In Progress"])
     if orders.length > 0
-      puts "in order"
+      #puts "in order"
       @order = orders.first
     end
 
@@ -68,12 +68,20 @@ class CustomersController < ApplicationController
   # DELETE /customers/1
   # DELETE /customers/1.json
   def destroy
-    @customer.destroy
-    respond_to do |format|
-      format.html { redirect_to customers_url, notice: 'Customer was successfully destroyed.' }
-      format.json { head :no_content }
+    @order = Order.where(:customer_id => @customer.id).first
+    if @order.status == "Initated" or @order.status == "In Progress"
+      respond_to do |format|
+        format.html { redirect_to root_path, notice: 'Cannot delete Customer due his/her current order' }
+        format.json { head :no_content }
+      end
+    else
+      @customer.destroy
+      respond_to do |format|
+        format.html { redirect_to customers_url, notice: 'Customer was successfully destroyed.' }
+        format.json { head :no_content }
+      end
     end
-  end
+    end
 
   private
     # Use callbacks to share common setup or constraints between actions.
