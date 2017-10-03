@@ -31,6 +31,7 @@
             <td><%= car.location %></td>
             <td><%= car.style%></td>
             <td><%= car.status%></td>
+            <td><%= link_to 'Check Availability', order_history_path(:car_id => car,:cust_id => current_customer)%></td>
             <td><%= link_to 'Reserve', new_order_path(:car_id => car,:cust_id => current_customer)%></td>
             <% if current_customer.admin? %>
               <td><%= link_to 'Show', car %></td>

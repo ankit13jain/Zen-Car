@@ -41,13 +41,27 @@ class OrdersController < ApplicationController
   def edit
   end
 
-  def is_valid_date_range date1, date2
+  def is_valid_date_range(date1, date2)
     if (date1 - date2).between?(3600.0, 36000.0)
       true
     else
       false
     end
   end
+
+  def already_reserved(car_id, return_date, check_out_date)
+    @already_reserved_order = Order.where(:car_id => car_id, :status => ["Initiated", "In Progress"])
+
+    unless @already_reserved_order.blank?
+      if @already_reserved_order.first.checked_out_at >= check_out_date or @already_reserved_order.first.checked_out_at <= return_date
+        return false
+      end
+    end
+
+    true
+
+  end
+
 
   # POST /orders
   # POST /orders.json
@@ -63,6 +77,11 @@ class OrdersController < ApplicationController
     # Validate date
     unless is_valid_date_range @order.returned_at, @order.checked_out_at
       flash[:notice] = "ERROR: Can reserve only between 1 to 10 hours. Please try again."
+      redirect_to root_path and return
+    end
+
+    unless already_reserved@order.car_id, @order.returned_at, @order.checked_out_at
+      flash[:notice] = "ERROR: Car already reserved for that time. Please try again."
       redirect_to root_path and return
     end
 
