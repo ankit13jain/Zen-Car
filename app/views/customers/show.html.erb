@@ -9,3 +9,6 @@
   <%= link_to 'Edit', edit_customer_path(@customer) %> |
 <% end %>
 <%= link_to 'Back', customers_path %>
+<br>
+
+<%= link_to 'Order History', order_history_path(@customer.id) %>
