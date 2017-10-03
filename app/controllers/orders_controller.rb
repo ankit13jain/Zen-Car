@@ -31,6 +31,14 @@ class OrdersController < ApplicationController
   def edit
   end
 
+  def is_valid_date_range date1, date2
+    if (date1 - date2).between?(3600.0, 36000.0)
+      true
+    else
+      false
+    end
+  end
+
   # POST /orders
   # POST /orders.json
   def create
@@ -40,6 +48,13 @@ class OrdersController < ApplicationController
     @order.customer_id = @@cust_id
     @car = Car.find(@order.car_id)
     @order.reserved_at = Time.now
+
+    # Validate date
+    unless is_valid_date_range @order.returned_at, @order.checked_out_at
+      flash[:notice] = "ERROR: Can reserve only between 1 to 10 hours. Please try again."
+      redirect_to root_path and return
+    end
+
     @order.status = "Initiated"
     @order.total_charges = ((@order.returned_at - @order.checked_out_at)/3600).to_f * @order.car.hourly_rate
     respond_to do |format|
