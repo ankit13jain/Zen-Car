@@ -1,6 +1,15 @@
 class OrdersController < ApplicationController
   before_action :set_order, only: [:show, :edit, :update, :destroy]
   before_action :authorize_admin
+  before_action :check_prior_reservarion, only[:new, :create]
+
+  def check_prior_reservarion
+    # Customer should not be able to reserve more than 1 car at a time
+    if customer_has_prior_reservation
+      flash[:notice] = "ERROR: Cannot have more than one reservation"
+      redirect_to root_path and return
+    end
+  end
 
   def authorize_admin
     redirect_to root_path, alert: 'Admins only!' unless current_customer and current_customer.admin?
@@ -24,7 +33,6 @@ class OrdersController < ApplicationController
     @order.car = Car.find(params[:car_id])
     @@car_status = @order.car.status
     @@car_id = @order.car.id
-
   end
 
   # GET /orders/1/edit
@@ -42,6 +50,7 @@ class OrdersController < ApplicationController
   # POST /orders
   # POST /orders.json
   def create
+
     @order = Order.new(order_params)
     puts order_params
     @order.car_id = @@car_id
