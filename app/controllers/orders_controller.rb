@@ -1,12 +1,14 @@
 class OrdersController < ApplicationController
   before_action :set_order, only: [:show, :edit, :update, :destroy]
-  before_action :authorize_admin
-  before_action :check_prior_reservarion, only[:new, :create]
+  before_action :authorize_admin, only: [:index]
+  before_action :check_prior_reservation, only: [:new, :create]
 
-  def check_prior_reservarion
+  def check_prior_reservation
     # Customer should not be able to reserve more than 1 car at a time
-    if customer_has_prior_reservation
-      flash[:notice] = "ERROR: Cannot have more than one reservation"
+
+    @prior_reservation = Order.where(:customer_id => current_customer.id, :status => ["Initiated", "In Progress"])
+    unless @prior_reservation.blank?
+      flash[:notice] = "ERROR: Cannot reserve more than one car"
       redirect_to root_path and return
     end
   end
