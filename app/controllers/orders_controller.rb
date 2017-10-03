@@ -1,5 +1,10 @@
 class OrdersController < ApplicationController
   before_action :set_order, only: [:show, :edit, :update, :destroy]
+  before_action :authorize_admin
+
+  def authorize_admin
+    redirect_to root_path, alert: 'Admins only!' unless current_customer and current_customer.admin?
+  end
 
   # GET /orders
   # GET /orders.json
