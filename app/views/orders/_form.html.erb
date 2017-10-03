@@ -16,13 +16,12 @@
   </div>
   <div class="field">
     <%= form.label :checked_out_at %>
-    <%= form.datetime_field :checked_out_at, id: :order_checked_out__at %>
+    <%= form.datetime_field :checked_out_at, id: :order_checked_out__at, min: Date.today, max: 6.days.from_now%>
 
   </div>
   <div class="field">
-
     <%= form.label :returned_at %>
-    <%= form.datetime_field :returned_at, id: :order_returned_at %>
+    <%= form.datetime_field :returned_at, id: :order_returned_at, min: Date.today%>
 
   </div>
   <% if current_customer.admin? %>
