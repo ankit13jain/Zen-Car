@@ -1,5 +1,11 @@
 <p id="notice"><%= notice %></p>
 
+<br>
+<h3>Search Cars</h3>
+
+<%= render "cars/search_form" %>
+<hr>
+
 <% if current_customer.admin? %>
     <%= render 'customers/admin_index' %>
 <% else %>
@@ -11,9 +17,5 @@
     <% end %>
 <% end %>
 
-<br>
-<h3>Search Cars</h3>
-
-<%= render "cars/search_form" %>
 
 <%= link_to 'Order History', order_history_path(:cust_id => current_customer) %>
