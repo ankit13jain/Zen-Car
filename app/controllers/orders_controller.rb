@@ -171,6 +171,7 @@ class OrdersController < ApplicationController
 
   def availability
     @orders = Order.search(params)
+    @orders = @orders.select{|order| order.status == "Initiated" || order.status == "In Progress"}
   end
 
   private

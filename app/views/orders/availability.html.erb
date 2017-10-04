@@ -24,7 +24,7 @@
 
       <tbody>
       <% @orders.each do |order| %>
-          <% if order.status == 'Initiated' or 'In Progress' %>
+          <% if order.status == 'Initiated' or order.status == 'In Progress' %>
           <tr>
             <td> <%= order.car.manufacturer %>&nbsp;<%= order.car.model %></td>
             <% if current_customer.admin? %>
