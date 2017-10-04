@@ -1,7 +1,6 @@
 # README
 
 Preconfigured credentials:
-[PLEASE DON'T CHANGE THESE CREDENTIALS. If you want to test update password, please change them back to these preconfigured password]
 
 ```
 Superadmin
@@ -12,7 +11,7 @@ Admin
 username: admin@admin.com
 password: password
 ```
-
+[PLEASE DON'T CHANGE THESE CREDENTIALS. If you want to test update password, please change them back to these preconfigured password]
 
 
 
