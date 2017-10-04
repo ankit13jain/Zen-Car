@@ -1,0 +1,32 @@
+<%= form_with(model: recommendation, local: true) do |form| %>
+  <% if recommendation.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(recommendation.errors.count, "error") %> prohibited this recommendation from being saved:</h2>
+
+      <ul>
+      <% recommendation.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= form.label :model %>
+    <%= form.text_field :model, id: :recommendation_model %>
+  </div>
+
+  <div class="field">
+    <%= form.label :manufacturer %>
+    <%= form.text_field :manufacturer, id: :recommendation_manufacturer %>
+  </div>
+
+  <div class="field">
+    <%= form.label :style %>
+    <%= form.collection_select :style, Car::STYLE, :to_s, :to_s %>
+  </div>
+
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+<% end %>

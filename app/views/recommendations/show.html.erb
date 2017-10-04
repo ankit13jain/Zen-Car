@@ -1,0 +1,19 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Model:</strong>
+  <%= @recommendation.model %>
+</p>
+
+<p>
+  <strong>Manufacturer:</strong>
+  <%= @recommendation.manufacturer %>
+</p>
+
+<p>
+  <strong>Style:</strong>
+  <%= @recommendation.style %>
+</p>
+
+<%= link_to 'Edit', edit_recommendation_path(@recommendation) %> |
+<%= link_to 'Back', customers_path %>
