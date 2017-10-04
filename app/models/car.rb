@@ -19,7 +19,8 @@ class Car < ApplicationRecord
   end
 
   def self.handle_not_returned_orders()
-    cars_wrong_status = Order.where(:status => "In Progress").where(['"returned_at" <= ?', Time.now])
+    cars_wrong_status = Order.where(:status => "In Progress").find(:all, :conditions => ['"returned_at" <= ?', Time.now])
+    #cars_wrong_status = Order.where(:status => "In Progress").where(['"returned_at" <= ?', Time.now])
     cars_wrong_status.each do |ord|
       ord.update(:status => "Completed")
       car = Car.where(:id => ord.car_id)
