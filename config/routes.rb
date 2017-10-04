@@ -1,8 +1,10 @@
 Rails.application.routes.draw do
+  resources :recommendations
   resources :orders
   devise_for :customers
   resources :customers, except: :create
   resources :cars
+  resources :recommendations
 
   post 'create_customer' => 'customers#create', as: :create_customer
 

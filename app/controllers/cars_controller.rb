@@ -17,6 +17,11 @@ class CarsController < ApplicationController
   # GET /cars/new
   def new
     @car = Car.new
+    @car.model = params[:model]
+    @car.manufacturer = params[:manufacturer]
+    @car.style = params[:style]
+    @@recom_id = params[:r_id]
+
   end
 
   # GET /cars/1/edit
@@ -27,9 +32,9 @@ class CarsController < ApplicationController
   # POST /cars.json
   def create
     @car = Car.new(car_params)
-
     respond_to do |format|
       if @car.save
+        Recommendation.where(:id => @@recom_id).update_all(:status => "Approved")
         format.html { redirect_to @car, notice: 'Car was successfully created.' }
         format.json { render :show, status: :created, location: @car }
       else

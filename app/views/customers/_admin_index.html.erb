@@ -23,8 +23,8 @@
         <td><%= order.checked_out_at %></td>
         <td><%= order.reserved_at %></td>
         <td><%= order.returned_at %></td>
-        <td><%= order.car_id %></td>
-        <td><%= order.customer_id %></td>
+        <td><%= order.car.manufacturer %> <%= order.car.model %></td>
+        <td><%= order.customer.email %></td>
         <td><%= order.status %></td>
         <td><%= order.total_charges %></td>
         <td><%= link_to 'Show', order %></td>
@@ -160,3 +160,33 @@
 <% end %>
 
 <hr>
+
+<p>Recommendations</p>
+
+<table class='table table-hover'>
+  <thead>
+  <tr>
+    <th>Manufacturer</th>
+    <th>Model</th>
+    <th>Style</th>
+    <th>Status</th>
+    <th colspan="3"></th>
+  </tr>
+  </thead>
+
+  <tbody>
+  <% @recommendations.each do |recom| %>
+      <tr>
+        <td><%= recom.manufacturer %></td>
+        <td><%= recom.model %></td>
+        <td><%= recom.style %></td>
+        <td><%= recom.status %></td>
+        <% if recom.status == 'Pending' %>
+        <td><%= link_to 'Approve', new_car_path(:model=>recom.model, :manufacturer=>recom.manufacturer, :style=>recom.style, :r_id=>recom.id) %></td>
+        <td><%= link_to 'Edit', edit_recommendation_path(recom) %></td>
+        <% end %>
+        <td><%= link_to 'Destroy', recom, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+  <% end %>
+  </tbody>
+</table>
