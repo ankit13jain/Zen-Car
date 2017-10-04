@@ -16,6 +16,7 @@ namespace :cancel_unchecked_cars do
 
 end
 
+
 namespace :automatically_return_reserved_cars do
   desc "Rake task to make car available after return period has passed"
   task :check => :environment do

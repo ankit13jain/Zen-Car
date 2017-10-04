@@ -89,12 +89,15 @@ class OrdersController < ApplicationController
     @order.status = "Initiated"
     @order.total_charges = (((@order.returned_at - @order.checked_out_at)/3600).to_f * @order.car.hourly_rate).round(2)
     respond_to do |format|
-    #if @@car_status == "Available" && @order.save
+
+    # run rake task after half n hour from checked out car
+    #load 'lib/tasks/cancel_after_30_mins.rake'
+    #CarRentalApp::Application.load_tasks
+    #Rake::Task["system_checks:cancel_after_30_mins"].invoke(@order)
+
     if @order.save
       @car.status = "Reserved"
       @car.save
-
-      # run rake task after half n hour from checked out car
 
       format.html { redirect_to @order, notice: 'Order was successfully created.' }
       format.json { render :show, status: :created, location: @order }

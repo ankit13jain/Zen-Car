@@ -60,6 +60,12 @@ class CustomersController < ApplicationController
   # DELETE /customers/1
   # DELETE /customers/1.json
   def destroy
+
+    if @customer == current_customer and @customer.admin?
+      flash[:notice] = "ERROR: Admin cannot delete himself"
+      redirect_to root_path and return
+    end
+
     @order = Order.where(:customer_id => @customer.id).first
     if not @order.nil? and (@order.status == "Initated" or @order.status == "In Progress")
       respond_to do |format|
