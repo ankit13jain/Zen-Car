@@ -5,7 +5,9 @@ application up and running.
 
 Things you may want to cover:
 
-* Ruby version
+* Ruby version - 2.4.1p111
+
+* Rails version - 5.1.4
 
 * System dependencies - run 'bundle install' to install all the dependencies
 
@@ -17,10 +19,16 @@ Things you may want to cover:
 
 * How to run the test suite - Run the following commands - 
                             rails db:test:prepare
+                            rails test test/unit/car_test.rb
                             
 
-* Services (job queues, cache servers, search engines, etc.)
+* Services (job queues, cache servers, search engines, etc.) - It uses rails cron jobs to change the status of Reserved Car to Available when not checked out without half an hour of the said 'check out time'
 
-* Deployment instructions
+* Deployment instructions - Code is deployed to Heroku server from the Master branch of GIT
 
-* ...
+*********Assumptions and different corner scenarios*******************
+* To view all cars click search without adding any filters
+* If an Admin deletes a User/Car with existing Reservations, all the existing reservations are deleted along with the required User/Car
+* Admin can create a reservation on behalf of customer by searching a car, clickling Reserve and entering customer's valid email id
+* Admin can checkout/return a car on behalf of customer by clicking show next to the customer who has Reservations
+
