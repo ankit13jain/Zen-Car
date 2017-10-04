@@ -61,7 +61,7 @@ class CustomersController < ApplicationController
   # DELETE /customers/1.json
   def destroy
     @order = Order.where(:customer_id => @customer.id).first
-    if @order.status == "Initated" or @order.status == "In Progress"
+    if not @order.nil? and (@order.status == "Initated" or @order.status == "In Progress")
       respond_to do |format|
         format.html { redirect_to root_path, notice: 'Cannot delete Customer due his/her current order' }
         format.json { head :no_content }
