@@ -4,7 +4,14 @@ class Order < ApplicationRecord
 
   STATUS = ["Initiated", "In Progress", "Completed", "Canceled"]
   def self.search(params)
-    where(['cast(customer_id as text) LIKE ?', "%#{params[:cust_id]}%"])
+
+    # If params contains car id, then consider car id also while displaying results
+    p params
+    if params.has_key? :car_id
+      where(:car_id => params[:car_id])
+    else
+      where(:customer_id => params[:cust_id])
+    end
   end
 
 end

@@ -1,21 +1,24 @@
 <p id="notice"><%= notice %></p>
 
+<br>
+<h3>Search Cars</h3>
+
+<%= render "cars/search_form" %>
+<hr>
+
 <% if current_customer.admin? %>
     <%= render 'customers/admin_index' %>
 <% else %>
     <p>Hello USER!</p>
 
     <% if !@order.nil? && @order.status == "Initiated" %>
-        <% puts '******' %>
-      <%=link_to 'Check out', order_checkout_path %> | <%=link_to "Cancel Order", order_cancel_path %>
+
+      <%=link_to 'Check out', order_checkout_path(:id=>current_customer.id) %> | <%=link_to "Cancel Order", order_cancel_path %>
+
     <% elsif !@order.nil? && @order.status == "In Progress"%>
-      <%=link_to 'Return', order_return_path %>
+      <%=link_to 'Return', order_return_path(:id=>current_customer.id) %>
     <% end %>
 <% end %>
 
-<br>
-<h3>Search Cars</h3>
-
-<%= render "cars/search_form" %>
 
 <%= link_to 'Order History', order_history_path(:cust_id => current_customer) %>

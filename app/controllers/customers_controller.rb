@@ -7,21 +7,13 @@ class CustomersController < ApplicationController
   # GET /customers
   # GET /customers.json
   def index
-    orders = Order.where(:customer_id => current_customer.id).where(:status => ["Initiated", "In Progress"])
-    if orders.length > 0
-      #puts "in order"
-      @order = orders.first
-    end
-
-    @customers = Customer.all
-    @cars = Car.all
-    @orders = Order.all
+    search_order_per_customer()
   end
 
   # GET /customers/1
   # GET /customers/1.json
   def show
-
+    search_order_per_customer()
   end
 
   # GET /customers/new
@@ -93,6 +85,24 @@ class CustomersController < ApplicationController
     def customer_params
       params.fetch(:customer, {})
       params.require(:customer).permit(:id, :email, :password, :salt, :encrypted_password, :admin, :superadmin)
+    end
+
+    def search_order_per_customer
+      if params.has_key?("id")
+        cust_id = params[:id]
+      else
+        cust_id = current_customer.id
+      end
+
+      orders = Order.where(:customer_id => cust_id).where.not(:status => "Completed")
+      if orders.length > 0
+        puts "in order"
+        @order = orders.first
+      end
+
+      @customers = Customer.all
+      @cars = Car.all
+      @orders = Order.all
     end
 
 end
