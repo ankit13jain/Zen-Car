@@ -35,5 +35,7 @@
   <%= @order.total_charges %>
 </p>
 
+<% if current_customer.admin? %>
 <%= link_to 'Edit', edit_order_path(@order) %> |
+    <% end %>
 <%= link_to 'Back', customers_path %>
