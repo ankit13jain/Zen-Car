@@ -3,15 +3,35 @@
 ## Preconfigured credentials:
 
 ```
-Superadmin
+*** Superadmin ***
 username: superaddmin@abc.com
 password: superadmin
 
-Admin
+*** Admin ***
 username: admin@admin.com
 password: password
 ```
-PLEASE DON'T CHANGE THESE CREDENTIALS. If you want to test update password, please change them back to these preconfigured password
+PLEASE DON'T CHANGE THESE CREDENTIALS. If you want to test update password functionality, please unsure you change the passwords back to these preconfigured password. This will enable other peers as well to review our work.
+
+## Signup
+1. Click on 'sign up' on the homepage
+2. Enter details, and click 'sign up'
+
+## Edit
+1. Click on 'Edit profile' on the nav bar, top right
+2. Enter details, and click 'update'
+3. Current password is asked while updating details, for security purpose
+
+## Delete
+1. Click on 'Edit profile' on the nav bar, top right
+2. Click 'Cancel my account'
+3. Confirm delete action by clicking 'Yes' on the popup
+
+## Search
+1. On the homepage, you will see a search bar. To view list of all cars, perform an empty search i.e. just click search without any filers
+2. 
+
+
 
 
 
