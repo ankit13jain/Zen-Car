@@ -16,4 +16,4 @@
 <%= link_to 'Back', customers_path %>
 <br>
 
-<%= link_to 'Order History', order_history_path(@customer.id) %>
+<%= link_to 'Order History', order_history_path(:cust_id => @customer.id) %>
