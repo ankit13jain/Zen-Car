@@ -87,7 +87,7 @@ class OrdersController < ApplicationController
     end
 
     @order.status = "Initiated"
-    @order.total_charges = ((@order.returned_at - @order.checked_out_at)/3600).to_f * @order.car.hourly_rate
+    @order.total_charges = (((@order.returned_at - @order.checked_out_at)/3600).to_f * @order.car.hourly_rate).round(2)
     respond_to do |format|
     #if @@car_status == "Available" && @order.save
     if @order.save
@@ -108,7 +108,7 @@ class OrdersController < ApplicationController
   # PATCH/PUT /orders/1
   # PATCH/PUT /orders/1.json
   def update
-    params[:order][:total_charges] = ((@order.returned_at - @order.checked_out_at)/3600).to_f * @order.car.hourly_rate
+    params[:order][:total_charges] = (((@order.returned_at - @order.checked_out_at)/3600).to_f * @order.car.hourly_rate).round(2)
     respond_to do |format|
       if @order.update(order_params)
         format.html { redirect_to @order, notice: 'Order was successfully updated.' }
@@ -144,7 +144,7 @@ class OrdersController < ApplicationController
 
   def return
     @order = Order.where(:customer_id => params[:id], :status => "In Progress").first
-    rental_charge = ((Time.now - @order.checked_out_at)/3600).to_f * @order.car.hourly_rate
+    rental_charge = (((Time.now - @order.checked_out_at)/3600).to_f * @order.car.hourly_rate).round(2)
     car = Car.find(@order.car_id)
     respond_to do |format|
       if @order.update(status:"Completed",returned_at:Time.now,total_charges:rental_charge) && car.update(status:"Available")
