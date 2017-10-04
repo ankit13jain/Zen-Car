@@ -133,7 +133,7 @@ class OrdersController < ApplicationController
     @order = Order.where(:customer_id => params[:id], :status => "Initiated").first
     car = Car.find(@order.car_id)
     respond_to do |format|
-      if @order.update(status:"In Progress") && car.update(status:"Checked out")
+      if @order.update(status:"In Progress", checked_out_at:Time.now) && car.update(status:"Checked out")
         format.html { redirect_to root_path, notice: 'Car Checked Out successfully' }
         format.json { render :show, status: :ok, location: @order }
       end
