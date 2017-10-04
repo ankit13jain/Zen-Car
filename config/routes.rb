@@ -11,5 +11,6 @@ Rails.application.routes.draw do
   root 'customers#index'
   get 'order_checkout' => 'orders#checkout'
   get 'order_return' => 'orders#return'
+  get 'order_cancel' => 'orders#cancel'
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 end

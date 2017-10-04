@@ -1,6 +1,6 @@
 <p id="notice"><%= notice %></p>
 
-<h1>Cars</h1>
+<h1>Orders</h1>
 
 <% if @orders.blank? %>
     <h4>There are no orders</h4>
@@ -12,6 +12,7 @@
         <th>Car</th>
         <th>Check out time</th>
         <th>Return time</th>
+        <th>Status</th>
         <th>Total charges</th>
         <th colspan="4"></th>
       </tr>
@@ -23,12 +24,15 @@
             <td><%= order.car.manufacturer %>&nbsp;<%= order.car.model %></td>
             <td><%= order.checked_out_at %></td>
             <td><%= order.returned_at %></td>
+            <td><%= order.status %></td>
             <td><%= order.total_charges %></td>
 
           </tr>
       <% end %>
       </tbody>
     </table>
-<% end %>
+    <br>
 
+<% end %>
+<%= link_to 'Back', customers_path %>
 <br>

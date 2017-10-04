@@ -2,7 +2,7 @@ class Order < ApplicationRecord
   belongs_to :car
   belongs_to :customer
 
-  STATUS = ["Initiated", "In Progress", "Completed"]
+  STATUS = ["Initiated", "In Progress", "Completed", "Canceled"]
   def self.search(params)
 
     # If params contains car id, then consider car id also while displaying results

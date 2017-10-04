@@ -56,12 +56,19 @@ class CarsController < ApplicationController
   # DELETE /cars/1
   # DELETE /cars/1.json
   def destroy
-    @car.destroy
-    respond_to do |format|
-      format.html { redirect_to cars_url, notice: 'Car was successfully destroyed.' }
-      format.json { head :no_content }
+    if @car.status != 'Available'
+      respond_to do |format|
+        format.html { redirect_to root_path, notice: 'Cannot delete Reserved/Checked-out car.' }
+        format.json { head :no_content }
+      end
+    else
+      @car.destroy
+      respond_to do |format|
+        format.html { redirect_to root_path, notice: 'Car was successfully destroyed.' }
+        format.json { head :no_content }
+      end
     end
-  end
+    end
 
   private
     # Use callbacks to share common setup or constraints between actions.
@@ -73,5 +80,5 @@ class CarsController < ApplicationController
     def car_params
       params.require(:car).permit(:license_no, :manufacturer, :hourly_rate, :model, :location, :style, :status)
     end
+  end
 
-end

@@ -153,6 +153,17 @@ class OrdersController < ApplicationController
     end
   end
 
+  def cancel
+    @order = Order.where(:customer_id => current_customer.id, :status => "Initiated").first
+    car = Car.find(@order.car_id)
+    respond_to do |format|
+      if @order.update(status:"Canceled") && car.update(status:"Available")
+        format.html { redirect_to root_path, notice: 'Order Canceled successfully' }
+        format.json { render :show, status: :ok, location: @order }
+      end
+    end
+  end
+
   def history
     @orders = Order.search(params)
   end
