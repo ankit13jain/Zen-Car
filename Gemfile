@@ -67,3 +67,5 @@ gem 'bootstrap-sass'
 gem 'autoprefixer-rails'
 
 gem 'jquery-rails'
+
+gem 'whenever', :require => false

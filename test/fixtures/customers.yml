@@ -4,8 +4,26 @@
 # model remove the '{}' from the fixture names and add the columns immediately
 # below each fixture, per the syntax in the comments below
 #
-one: {}
-# column: value
+one:
+  id: 2
+  created_at: 2017-10-03 00:27:16.747738
+  updated_at: 2017-10-03 19:03:47.699158
+  email: abc@abc.com
+  #encypted_password: $2a$11$olRgoxWXTnvpaYk22ofAyOg9NPZU.b/7zoUcHEDPEr5RFUrgwn7O6
+  admin: f
+  superadmin: f
+  sign_in_count: 5
+
+
 #
-two: {}
+two:
+  id: 3
+  created_at: 2017-10-03 19:03:47.698157
+  updated_at: 2017-10-03 18:15:44.769191
+  email: admin@abc.com
+  #encypted_password: $2a$11$UOhGPEUUjaYtdiaA6SrxLuATy1IEV7HKaDzJQuHxw0feQ3r/86GjC
+  admin: t
+  superadmin: f
+  sign_in_count: 1
+
 # column: value
