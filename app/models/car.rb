@@ -7,8 +7,8 @@ class Car < ApplicationRecord
   STYLE = ["Coupe", "Sedan", "SUV"]
 
   def self.handle_not_checked_out_orders()
-    #cars_wrong_status = Order.where(:status => "Initiated").where(['(((julianday(?) - julianday("checked_out_at"))*86400) >= 1800)', Time.now])
-    cars_wrong_status = Order.where(:status => "Initiated").where("checked_out_at" < (Time.now) + 1800)
+    #cars_wrong_status = Order.where(:status => "Initiated").where(['(((julianday(?) - julianday("checked_.out_at"))*86400) >= 1800)', Time.now])
+    cars_wrong_status = Order.where(:status => "Initiated").find(:all, :conditions => ['checked_out_at <= ?', DateTime.now + 1800])
     cars_wrong_status.each do |ord|
       ord.update(:status => "Canceled")
       car = Car.where(:id => ord.car_id)
