@@ -32,7 +32,9 @@ class OrdersController < ApplicationController
     @order = Order.new(order_params)
     puts order_params
     @order.car_id = @@car_id
-    @order.customer_id = @@cust_id
+    if(params[:order][:customer_email].nil?)
+      @order.customer_id = @@cust_id
+    end
     @car = Car.find(@order.car_id)
     @order.reserved_at = Time.now
     @order.status = "Initiated"
@@ -45,8 +47,7 @@ class OrdersController < ApplicationController
       format.html { redirect_to @order, notice: 'Order was successfully created.' }
       format.json { render :show, status: :created, location: @order }
     else
-      flash[:notice] = "There was an error creating an order"
-      format.html { render :root_path }
+      format.html { render :new }
       format.json { render json: @order.errors, status: :unprocessable_entity }
     end
     end
@@ -55,6 +56,7 @@ class OrdersController < ApplicationController
   # PATCH/PUT /orders/1
   # PATCH/PUT /orders/1.json
   def update
+    params[:order][:total_charges] = ((@order.returned_at - @order.checked_out_at)/3600).to_f * @order.car.hourly_rate
     respond_to do |format|
       if @order.update(order_params)
         format.html { redirect_to @order, notice: 'Order was successfully updated.' }
@@ -77,7 +79,8 @@ class OrdersController < ApplicationController
   end
 
   def checkout
-    @order = Order.where(:customer_id => current_customer.id, :status => "Initiated").first
+    puts "checout", params
+    @order = Order.where(:customer_id => params[:id], :status => "Initiated").first
     car = Car.find(@order.car_id)
     respond_to do |format|
       if @order.update(status:"In Progress") && car.update(status:"Checked out")
@@ -88,7 +91,7 @@ class OrdersController < ApplicationController
   end
 
   def return
-    @order = Order.where(:customer_id => current_customer.id, :status => "In Progress").first
+    @order = Order.where(:customer_id => params[:id], :status => "In Progress").first
     car = Car.find(@order.car_id)
     respond_to do |format|
       if @order.update(status:"Completed") && car.update(status:"Available")
@@ -110,7 +113,18 @@ class OrdersController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def order_params
-      params.require(:order).permit(:checked_out_at, :reserved_at, :returned_at, :car, :customer_id, :status, :total_charges)
+      #if(!params[:order][:customer_email].nil?)
+        cust = Customer.where(:email => params[:order][:customer_email]).first
+        puts "params cust email ", params[:order][:customer_email]
+        if(!cust.nil?)
+          params[:order][:customer_id] = cust.id
+          puts "params cust id ", params[:order][:customer_id]
+        else
+          params[:order][:customer_id] = nil
+        end
+      #end
+      params.require(:order).permit(:checked_out_at, :reserved_at, :returned_at, :car, :status, :total_charges,:customer_id)
+
     end
 end
 
