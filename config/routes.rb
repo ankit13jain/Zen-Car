@@ -7,7 +7,7 @@ Rails.application.routes.draw do
   post 'create_customer' => 'customers#create', as: :create_customer
 
   get 'order_history' => 'orders#history'
-
+  get 'order_availability' => 'orders#availability'
   root 'customers#index'
   get 'order_checkout' => 'orders#checkout'
   get 'order_return' => 'orders#return'
