@@ -1,9 +1,9 @@
 <p id="notice"><%= notice %></p>
 
-<h1>Orders</h1>
+<h1>Availability</h1>
 
 <% if @orders.blank? %>
-    <h4>There are no orders</h4>
+    <h4>Car is available</h4>
 <% else%>
 
     <table class='table table-hover'>
@@ -16,7 +16,7 @@
         <th>Check out time</th>
         <th>Return time</th>
         <th>Status</th>
-        <th>Total charges</th>
+
 
         <th colspan="4"></th>
       </tr>
@@ -24,15 +24,16 @@
 
       <tbody>
       <% @orders.each do |order| %>
+          <% if order.status == 'Initiated' or 'In Progress' %>
           <tr>
-            <td><%= order.car.manufacturer %>&nbsp;<%= order.car.model %></td>
+            <td> <%= order.car.manufacturer %>&nbsp;<%= order.car.model %></td>
             <% if current_customer.admin? %>
                 <th><%= order.customer.email %></th>
             <% end %>
             <td><%= order.checked_out_at %></td>
             <td><%= order.returned_at %></td>
-            <td><%= order.status %></td>
-            <td><%= order.total_charges %></td>
+            <td><%= order.car.status %></td>
+            <% end %>
 
           </tr>
       <% end %>
