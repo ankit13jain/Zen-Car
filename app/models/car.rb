@@ -11,7 +11,9 @@ class Car < ApplicationRecord
     cars_wrong_status.each do |ord|
       ord.update(:status => "Canceled")
       car = Car.where(['"id" == ?', ord.car_id])
-      car.update(:status=>"Available")
+      unless car.nil?
+        car.update(:status=>"Available")
+      end
     end
   end
 
@@ -20,7 +22,9 @@ class Car < ApplicationRecord
     cars_wrong_status.each do |ord|
       ord.update(:status => "Completed")
       car = Car.where(['"id" == ?', ord.car_id])
-      car.update(:status=>"Available")
+      unless car.nil?
+        car.update(:status=>"Available")
+      end
     end
   end
 
