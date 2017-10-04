@@ -1,21 +1,18 @@
 # README
 
-Preconfigured credentials [PLEASE DON'T CHANGE THESE CREDENTIALS. If you want to test update password, please change them back to these preconfigured password]
+Preconfigured credentials+
 
-Superadmin-
+PLEASE DON'T CHANGE THESE CREDENTIALS. If you want to test update password, please change them back to these preconfigured password
+
+Superadmin
+
 username: superaddmin@abc.com
 password: superadmin
 
-Admin-
+Admin
+
 username: admin@admin.com
 password: password
-
-Signup:
-
-
-
-
-
 
 
 
