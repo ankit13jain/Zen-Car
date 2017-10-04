@@ -1,5 +1,21 @@
 class OrdersController < ApplicationController
   before_action :set_order, only: [:show, :edit, :update, :destroy]
+  before_action :authorize_admin, only: [:index]
+  before_action :check_prior_reservation, only: [:new, :create]
+
+  def check_prior_reservation
+    # Customer should not be able to reserve more than 1 car at a time
+
+    @prior_reservation = Order.where(:customer_id => current_customer.id, :status => ["Initiated", "In Progress"])
+    unless @prior_reservation.blank?
+      flash[:notice] = "ERROR: Cannot reserve more than one car"
+      redirect_to root_path and return
+    end
+  end
+
+  def authorize_admin
+    redirect_to root_path, alert: 'Admins only!' unless current_customer and current_customer.admin?
+  end
 
   # GET /orders
   # GET /orders.json
@@ -19,16 +35,37 @@ class OrdersController < ApplicationController
     @order.car = Car.find(params[:car_id])
     @@car_status = @order.car.status
     @@car_id = @order.car.id
-
   end
 
   # GET /orders/1/edit
   def edit
   end
 
+  def is_valid_date_range(date1, date2)
+    if (date1 - date2).between?(3600.0, 36000.0)
+      true
+    else
+      false
+    end
+  end
+
+  def already_reserved(car_id, return_date, check_out_date)
+    @already_reserved_order = Order.where(:car_id => car_id, :status => ["Initiated", "In Progress"])
+
+    unless @already_reserved_order.blank?
+      if @already_reserved_order.first.checked_out_at >= check_out_date or @already_reserved_order.first.checked_out_at <= return_date
+        return false
+      end
+    end
+
+    true
+
+  end
+
   # POST /orders
   # POST /orders.json
   def create
+
     @order = Order.new(order_params)
     puts order_params
     @order.car_id = @@car_id
@@ -37,6 +74,18 @@ class OrdersController < ApplicationController
     end
     @car = Car.find(@order.car_id)
     @order.reserved_at = Time.now
+
+    # Validate date
+    unless is_valid_date_range @order.returned_at, @order.checked_out_at
+      flash[:notice] = "ERROR: Can reserve only between 1 to 10 hours. Please try again."
+      redirect_to root_path and return
+    end
+
+    unless already_reserved@order.car_id, @order.returned_at, @order.checked_out_at
+      flash[:notice] = "ERROR: Car already reserved for that time. Please try again."
+      redirect_to root_path and return
+    end
+
     @order.status = "Initiated"
     @order.total_charges = ((@order.returned_at - @order.checked_out_at)/3600).to_f * @order.car.hourly_rate
     respond_to do |format|
@@ -44,6 +93,9 @@ class OrdersController < ApplicationController
     if @order.save
       @car.status = "Reserved"
       @car.save
+
+      # run rake task after half n hour from checked out car
+
       format.html { redirect_to @order, notice: 'Order was successfully created.' }
       format.json { render :show, status: :created, location: @order }
     else

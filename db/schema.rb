@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170924195556) do
+ActiveRecord::Schema.define(version: 20171002234139) do
 
   create_table "cars", force: :cascade do |t|
     t.string "license_no"
@@ -39,6 +39,7 @@ ActiveRecord::Schema.define(version: 20170924195556) do
     t.string "last_sign_in_ip"
     t.boolean "admin", default: false
     t.boolean "superadmin", default: false
+    t.string "name"
     t.index ["email"], name: "index_customers_on_email", unique: true
     t.index ["reset_password_token"], name: "index_customers_on_reset_password_token", unique: true
   end
