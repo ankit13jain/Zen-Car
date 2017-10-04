@@ -64,7 +64,7 @@
         <td><%= car.status%></td>
         <td><%= link_to 'Show', car %></td>
         <td><%= link_to 'Edit', edit_car_path(car) %></td>
-        <td><%= link_to 'Destroy', car, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <td><%= link_to 'Destroy', car, method: :delete, data: { confirm: 'Are you sure? This will delete records from order history' } %></td>
       </tr>
   <% end %>
   </tbody>
@@ -89,7 +89,7 @@
           <td><%= customer.email %></td>
           <td><%= link_to 'Show', customer %></td>
           <td><%= link_to 'Edit', edit_customer_path(customer) %></td>
-          <td><%= link_to 'Destroy', customer, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+          <td><%= link_to 'Destroy', customer, method: :delete, data: { confirm: 'Are you sure? This will delete records from order history' } %></td>
         </tr>
         <% end %>
     <% end %>
