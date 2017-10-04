@@ -13,7 +13,7 @@
 
     <% if !@order.nil? && @order.status == "Initiated" %>
 
-      <%=link_to 'Check out', order_checkout_path(:id=>current_customer.id) %> | <%=link_to "Cancel Order", order_cancel_path %>
+      <%=link_to 'Check out', order_checkout_path(:id=>current_customer.id) %> | <%=link_to "Cancel Order", order_cancel_path %> |
 
     <% elsif !@order.nil? && @order.status == "In Progress"%>
       <%=link_to 'Return', order_return_path(:id=>current_customer.id) %>

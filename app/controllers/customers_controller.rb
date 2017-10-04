@@ -94,7 +94,7 @@ class CustomersController < ApplicationController
         cust_id = current_customer.id
       end
 
-      orders = Order.where(:customer_id => cust_id).where.not(:status => "Completed")
+      orders = Order.where(:customer_id => cust_id).where(:status => ["Initiated","In Progress"])
       if orders.length > 0
         puts "in order"
         @order = orders.first
