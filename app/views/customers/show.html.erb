@@ -7,5 +7,10 @@
 
 <% if current_customer.superadmin? or current_customer.admin? and not @customer.superadmin?%>
   <%= link_to 'Edit', edit_customer_path(@customer) %> |
+  <% if !@order.nil? && @order.status == "Initiated" %>
+      <%=link_to 'Check out', order_checkout_path(:id=>@customer.id) %> |
+  <% elsif !@order.nil? && @order.status == "In Progress"%>
+      <%=link_to 'Return', order_return_path(:id=>@customer.id) %> |
+  <% end %>
 <% end %>
 <%= link_to 'Back', customers_path %>

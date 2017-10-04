@@ -27,14 +27,9 @@
   <% if current_customer.admin? %>
     <div class="field">
       <%= form.label :customer_id %>
-      <%= form.text_field :customer_id, id: :order_customer_id %>
+      <%= form.text_field :customer_email, id: :customer_email , required:true %>
     </div>
   <% end %>
-
-  <div class="field">
-    <%= form.label :total_charges %>
-    <%= form.text_field :total_charges, id: :order_total_charges %>
-  </div>
 
   <div class="actions">
     <%= form.submit %>
