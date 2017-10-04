@@ -11,7 +11,7 @@ class Car < ApplicationRecord
     #cars_wrong_status = Order.where(:status => "Initiated").find(:all, :conditions => ['checked_out_at <= ?', Time.now + 1800])
     cars_wrong_status = Order.where(:status => "Initiated")
     cars_wrong_status.each do |ord|
-      if ord.checked_out_at <= (Time.now + 1800)
+      if ord.checked_out_at <= (Time.now + 1)
         ord.update(:status => "Canceled")
         car = Car.where(:id => ord.car_id)
         unless car.nil?
