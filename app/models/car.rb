@@ -7,10 +7,10 @@ class Car < ApplicationRecord
   STYLE = ["Coupe", "Sedan", "SUV"]
 
   def self.handle_not_checked_out_orders()
-    cars_wrong_status = Order.where(['"status" = "Initiated"']).where(['(((julianday(?) - julianday("checked_out_at"))*86400) >= 1800)', Time.now])
+    cars_wrong_status = Order.where(:status => "Initiated").where(['(((julianday(?) - julianday("checked_out_at"))*86400) >= 1800)', Time.now])
     cars_wrong_status.each do |ord|
       ord.update(:status => "Canceled")
-      car = Car.where(['"id" == ?', ord.car_id])
+      car = Car.where(:id => ord.car_id)
       unless car.nil?
         car.update(:status=>"Available")
       end
@@ -18,10 +18,10 @@ class Car < ApplicationRecord
   end
 
   def self.handle_not_returned_orders()
-    cars_wrong_status = Order.where(['"status" = "In Progress"']).where(['"returned_at" <= ?', Time.now])
+    cars_wrong_status = Order.where(:status => "In Progress").where(['"returned_at" <= ?', Time.now])
     cars_wrong_status.each do |ord|
       ord.update(:status => "Completed")
-      car = Car.where(['"id" == ?', ord.car_id])
+      car = Car.where(:id => ord.car_id)
       unless car.nil?
         car.update(:status=>"Available")
       end
