@@ -62,7 +62,6 @@ class OrdersController < ApplicationController
 
   end
 
-
   # POST /orders
   # POST /orders.json
   def create
@@ -92,6 +91,9 @@ class OrdersController < ApplicationController
     if @order.save
       @car.status = "Reserved"
       @car.save
+
+      # run rake task after half n hour from checked out car
+
       format.html { redirect_to @order, notice: 'Order was successfully created.' }
       format.json { render :show, status: :created, location: @order }
     else
