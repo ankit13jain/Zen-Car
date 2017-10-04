@@ -144,9 +144,10 @@ class OrdersController < ApplicationController
 
   def return
     @order = Order.where(:customer_id => params[:id], :status => "In Progress").first
+    rental_charge = ((Time.now - @order.checked_out_at)/3600).to_f * @order.car.hourly_rate
     car = Car.find(@order.car_id)
     respond_to do |format|
-      if @order.update(status:"Completed") && car.update(status:"Available")
+      if @order.update(status:"Completed",returned_at:Time.now,total_charges:rental_charge) && car.update(status:"Available")
         format.html { redirect_to root_path, notice: 'Car Returned successfully' }
         format.json { render :show, status: :ok, location: @order }
       end

@@ -103,6 +103,12 @@ class CustomersController < ApplicationController
       @customers = Customer.all
       @cars = Car.all
       @orders = Order.all
+      last_successful_order = Order.where(:customer_id => cust_id).where(:status => "Completed").order(returned_at: :DESC).first
+      puts "last_successful_order ",last_successful_order
+      if !last_successful_order.nil?
+          puts "last_successful_order", last_successful_order.total_charges
+        @rental_charge = last_successful_order.total_charges
+      end
     end
 
 end
