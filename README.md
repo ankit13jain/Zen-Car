@@ -47,6 +47,8 @@ PLEASE DON'T CHANGE THESE CREDENTIALS. If you want to test update password funct
 ### Checkout History
 1. On the homepage, you can check this by clicking "Order History"
 
+![orderhistory](https://media.github.ncsu.edu/user/8222/files/69e11518-a954-11e7-859b-5fe298affcc2)
+
 ## Admin
 
 ### Login and edit profile
