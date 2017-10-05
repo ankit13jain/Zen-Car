@@ -1,5 +1,6 @@
 # README
 
+Project URL - https://zencar.herokuapp.com/
 PLEASE USE GOOGLE CHROME TO TEST
 
 ## Preconfigured credentials:
