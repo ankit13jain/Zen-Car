@@ -1,6 +1,6 @@
 # README
 
-PLEASE USE GOOGLE CROME TO TEST
+PLEASE USE GOOGLE CHROME TO TEST
 
 ## Preconfigured credentials:
 
