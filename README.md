@@ -107,10 +107,11 @@ Things you may want to cover:
 
 * Database initialization - an admin has to be created using rails console on the server
 
-* How to run the test suite - Run the following commands - 
+* How to run the test suite - Run the following commands
+```
                             rails db:test:prepare
                             rails test test/unit/car_test.rb
-                            
+```                            
 
 * Services (job queues, cache servers, search engines, etc.) - It uses rails cron jobs to change the status of Reserved Car to Available when not checked out without half an hour of the said 'check out time'
 
