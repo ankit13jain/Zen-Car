@@ -1,5 +1,7 @@
 # README
 
+PLEASE USE GOOGLE CROME TO TEST
+
 ## Preconfigured credentials:
 
 ```
@@ -67,23 +69,29 @@ PLEASE DON'T CHANGE THESE CREDENTIALS. If you want to test update password funct
 2. You can add a new car by clicking on "New Car" button, and entering appropriate details. Validations have ben done for this form, such as license plate number should be a 7-digit unique string.
 3. To view attributes of a car, click on "Show". You can also view the checkout history of a car by clicking on the "Show car history" button, that also displays user email for a particular reservation.
 4. To edit attributes of a car, click on "Edit" button on the homepage.
-5. To delete a car, click "Destroy"
+5. To delete a car, click "Destroy". Note that you cannot delete resrerved or checked out car. Also, deleting any existing car will remove all its entries from reservation history.
 6. To change status of a car, you can reserve on behalf of the customer by searching for the car via search bar, and then clicking "Reserve". You will need to enter exact email id of the customer to book on his behalf.
 
-## Manage Customers
+### Manage Customers
 1. On the homepage, you will see "CUSTOMERS" heading, that contains a list of all customers.
 2. You can view all customer attributes, except password, by clicking on "Show"
 3. To view checkout history of customer, click on "Show" then "Order history"
-4. To delete, click on "Destroy". Note that you cannot delete a customer with an active reservation.
+4. To delete, click on "Destroy". Note that you cannot delete a customer with an active reservation. Also, deleting any existing customer will remove all its entries from reservation history.
+
+### Manage Reservations
+1. On the homepage, you will see "RESERVATIONS" heading, that contains a list of all reservation.
+2. To checkout or return on behalf of the customer, you first need to check which customer does the reservation belong to. Then go his profile and you will see a "Check out" or "Return" button.
+3. You can edit or delete any reservation from this list.
+
+## System features
+1. The system will cancel a resrevation if customer doesn't check out a car in time with 30 minutes elasticity. The corresponding car can then be booked for that time slot.
+2. The system will return a car on behalf of customer, if he doesn't return on the specified time.
 
 
 ## BONUS FEATURES IMPLEMENTED
-1. You can suggest a new car to be added to the system, by cliking on the "Provide car recommendation" button on the homepage. This will trigger a request sent to the admin, who can either approve or deny the request.
+1. You can suggest a new car to be added to the system, by cliking on the "Provide car recommendation" button on the homepage. This will trigger a request sent to the admin, who can either approve or deny the request. Admin can also change the attributes of the recommended car.
 
-
-
-This README would normally document whatever steps are necessary to get the
-application up and running.
+# To get the application up and running
 
 Things you may want to cover:
 
@@ -107,10 +115,3 @@ Things you may want to cover:
 * Services (job queues, cache servers, search engines, etc.) - It uses rails cron jobs to change the status of Reserved Car to Available when not checked out without half an hour of the said 'check out time'
 
 * Deployment instructions - Code is deployed to Heroku server from the Master branch of GIT
-
-*********Assumptions and different corner scenarios*******************
-* To view all cars click search without adding any filters
-* If an Admin deletes a User/Car with existing Reservations, all the existing reservations are deleted along with the required User/Car
-* Admin can create a reservation on behalf of customer by searching a car, clickling Reserve and entering customer's valid email id
-* Admin can checkout/return a car on behalf of customer by clicking show next to the customer who has Reservations
-
