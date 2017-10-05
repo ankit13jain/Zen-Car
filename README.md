@@ -32,6 +32,9 @@ PLEASE DON'T CHANGE THESE CREDENTIALS. If you want to test update password funct
 ### Search
 1. On the homepage, you will see a search bar. To view list of all cars, perform an empty search i.e. just click search without any filers
 
+*Screenshot*
+![search](https://media.github.ncsu.edu/user/8222/files/584c7b22-a958-11e7-9689-94077fb8ce88)
+
 ### Reserve a car
 1. Search for the car from search bar. The result will contain all attributes of the car.
 2. You can book any car, by clicking on "Reserve" button
@@ -39,15 +42,21 @@ PLEASE DON'T CHANGE THESE CREDENTIALS. If you want to test update password funct
 4. You can "Reserve" a car for a minimum of 1 hour, and maximum of 10 hours. Also, you cannot book a car more than 7 days in advance. These validation are being done.
 5. You cannot have more than 1 reservation at a time.
 
+*Screenshot*
+
+![reserve](https://media.github.ncsu.edu/user/8222/files/ab47edc0-a958-11e7-8dc5-c97ed5542b7e)
+
 ### Checkout and Return button
 1. Once you reserve a car, on your homepage you will see a "checkout" button. Similarly, once you check out the car, on the same place you will see an option to "return" the car
 2. Note that since reservation should be minimum 1 hour, if you return before 1 hour you will be charged for one hour.
 3. After successfully returning the car, you will see your total fee for previous successful rental displayed on the homepage
 
 ### Checkout History
-1. On the homepage, you can check this by clicking "Order History"
+1. On the homepage, you can check this by clicking "Order History"  
 
-![orderhistory](https://media.github.ncsu.edu/user/8222/files/69e11518-a954-11e7-859b-5fe298affcc2)
+*Screenshot*
+
+![checkout](https://media.github.ncsu.edu/user/8222/files/6bf9bc3c-a95a-11e7-9c2d-dee6307ffff6)
 
 ## Admin
 
