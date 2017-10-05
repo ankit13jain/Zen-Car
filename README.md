@@ -95,12 +95,14 @@ PLEASE DON'T CHANGE THESE CREDENTIALS. If you want to test update password funct
 3. You can edit or delete any reservation from this list.
 
 ## System features
-1. The system will cancel a resrevation if customer doesn't check out a car in time with 30 minutes elasticity. The corresponding car can then be booked for that time slot.
+1. The system will cancel a reservation if customer doesn't check out a car in time with 30 minutes elasticity. The corresponding car can then be booked for that time slot.
 2. The system will return a car on behalf of customer, if he doesn't return on the specified time.
 
+## Unit Test
+1. Thoroughly tested car model and car controller. Unit test module for the same can be found here <br />```test/unit/car_test.rb```
 
 ## BONUS FEATURES IMPLEMENTED
-1. You can suggest a new car to be added to the system, by cliking on the "Provide car recommendation" button on the homepage. This will trigger a request sent to the admin, who can either approve or deny the request. Admin can also change the attributes of the recommended car.
+1. You can suggest a new car to be added to the system, by clicking on the "Provide car recommendation" button on the homepage. This will trigger a request sent to the admin, who can either approve or deny the request. Admin can also change the attributes of the recommended car.
 
 # To get the application up and running
 
